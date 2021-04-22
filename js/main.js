@@ -349,14 +349,19 @@ function stepIt() {
 }
 
 function redFunction() {
-  document.getElementById("yourText").value = word.toUpperCase() + " is not a Reber word!";
-  document.getElementById("yourText").style.color = "red";
+  let element = document.getElementById("yourText");
+  element.value = word.toUpperCase() + " is not a Reber word!";
+  element.style.color = "red";
+  document.getElementById("stepReber").setAttribute('disabled', 'true');
+  document.getElementById("animateReber").setAttribute('disabled', 'true');
   word = "";
 }
 
 function greenFunction() {
   document.getElementById("yourText").value = word.toUpperCase();
   document.getElementById("yourText").style.color = "green";
+  document.getElementById("stepReber").removeAttribute("disabled");
+  document.getElementById("animateReber").removeAttribute("disabled");
   word = "";
 }
 
