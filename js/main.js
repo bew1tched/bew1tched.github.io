@@ -43,15 +43,19 @@ async function drawIt(j) {
 }
 
 function createTable(word) {
-  const row = table.insertRow(0);
-  const cell1 = row.insertCell(0);
-  cell1.innerHTML = word.toUpperCase();
+  if ((word !== "") && (word !== this.word)) {
+    const row = table.insertRow(0);
+    const cell1 = row.insertCell(0);
+    cell1.innerHTML = word.toUpperCase();
+  }
 }
 
 function createFalseTable(word) {
-  const row = falseTable.insertRow(0);
-  const cell1 = row.insertCell(0);
-  cell1.innerHTML = word.toUpperCase();
+  if ((word !== "") && (word !== this.word)) {
+    const row = falseTable.insertRow(0);
+    const cell1 = row.insertCell(0);
+    cell1.innerHTML = word.toUpperCase();
+  }
 }
 
 function getReber() {
@@ -177,11 +181,18 @@ function testReber() {
         if (c === 'e') {
           // DONE
           i++;
+          c = word[i];
+          console.log(c)
           data = {
             'x': 360,
             'y': 162,
             'dx': 470,
             'dy': 162,
+          }
+          if (c) {
+            redFunction();
+            createFalseTable(word);
+            break;
           }
           points.push(data);
           greenFunction();
@@ -261,16 +272,22 @@ function testReber() {
 
             if (c === 'e') {
               i++;
+              c = word[i];
+              console.log(c)
               data = {
                 'x': 360,
                 'y': 162,
                 'dx': 470,
                 'dy': 162,
               }
+              if (c) {
+                redFunction();
+                createFalseTable(word);
+                return;
+              }
               points.push(data);
               greenFunction();
               createTable(word);
-              //demo();
             } else {
               redFunction();
               createFalseTable(word);
@@ -294,16 +311,22 @@ function testReber() {
         if (c === 'e') {
           // DONE
           i++;
+          c = word[i];
+          console.log(c)
           data = {
             'x': 360,
             'y': 162,
             'dx': 470,
             'dy': 162,
           }
+          if (c) {
+            redFunction();
+            createFalseTable(word);
+            return;
+          }
           points.push(data);
           greenFunction();
           createTable(word);
-          //demo();
         } else {
           redFunction();
           createFalseTable(word);
@@ -315,7 +338,6 @@ function testReber() {
     }
   }
 }
-
 
 async function demo() {
   for (let j = 0; j < points.length; j++) {
@@ -354,6 +376,8 @@ function redFunction() {
   element.style.color = "red";
   document.getElementById("stepReber").setAttribute('disabled', 'true');
   document.getElementById("animateReber").setAttribute('disabled', 'true');
+
+
   word = "";
 }
 
@@ -362,7 +386,14 @@ function greenFunction() {
   document.getElementById("yourText").style.color = "green";
   document.getElementById("stepReber").removeAttribute("disabled");
   document.getElementById("animateReber").removeAttribute("disabled");
+
   word = "";
+}
+
+let haschanged = false;
+
+function has_changed() {
+  haschanged = true;
 }
 
 let los = document.getElementById('testReber');
