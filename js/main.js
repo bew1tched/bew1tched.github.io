@@ -7,6 +7,7 @@ let dx;
 let dy;
 
 let word = "";
+let old_word = "";
 
 let table = document.getElementById("myTablerow");
 let falseTable = document.getElementById("myFalseTablerow");
@@ -72,10 +73,13 @@ function getFalseReber() {
 }
 
 function testReber() {
+  word = document.getElementById("myText").value.toLocaleString().toLowerCase();
+  if (word === old_word) {
+    return;
+  }
 
   points = [];
   k = 0;
-  word = document.getElementById("myText").value.toLocaleString().toLowerCase();
 
   let c = '';
   let i = 0;
@@ -179,10 +183,8 @@ function testReber() {
         }
         points.push(data);
         if (c === 'e') {
-          // DONE
           i++;
           c = word[i];
-          console.log(c)
           data = {
             'x': 360,
             'y': 162,
@@ -377,7 +379,7 @@ function redFunction() {
   document.getElementById("stepReber").setAttribute('disabled', 'true');
   document.getElementById("animateReber").setAttribute('disabled', 'true');
 
-
+  old_word = word;
   word = "";
 }
 
@@ -387,14 +389,10 @@ function greenFunction() {
   document.getElementById("stepReber").removeAttribute("disabled");
   document.getElementById("animateReber").removeAttribute("disabled");
 
+  old_word = word;
   word = "";
 }
 
-let haschanged = false;
-
-function has_changed() {
-  haschanged = true;
-}
 
 let los = document.getElementById('testReber');
 los.addEventListener('click', testReber, true);
