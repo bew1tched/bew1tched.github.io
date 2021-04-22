@@ -6,6 +6,15 @@ let data = {}
 let dx;
 let dy;
 
+point_1 = {'dx': 106, 'dy': 163};
+point_2 = {'dx': 186, 'dy': 83};
+point_3 = {'dx': 186, 'dy': 83};
+point_4 = {'dx': 286, 'dy': 83};
+point_5 = {'dx': 366, 'dy': 163};
+point_6 = {'dx': 460, 'dy': 163};
+point_7 = {'dx': 186, 'dy': 243};
+point_8 = {'dx': 286, 'dy': 243};
+
 let word = "";
 let old_word = "";
 
@@ -28,14 +37,14 @@ slider.oninput = function () {
 
 function drawBall() {
   ctx.beginPath();
-  ctx.arc(dx, dy, 10, 0, Math.PI * 2);
-  ctx.fillStyle = "#0095DD";
+  ctx.arc(dx, dy, 15, 0, Math.PI * 2);
+  ctx.fillStyle = "rgba(152,245,255,1)";
   ctx.fill();
   ctx.closePath();
 }
 
-
 async function drawIt(j) {
+  console.log(points)
   dx = points[j]['dx']
   dy = points[j]['dy']
   ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -88,13 +97,7 @@ function testReber() {
     if (c === 'b') {
       i++;
       c = word[i];
-      data = {
-        'x': 2,
-        'y': 162,
-        'dx': 106,
-        'dy': 162,
-      }
-      points.push(data);
+      points.push({'dx': point_1.dx, 'dy': point_1.dy});
 
     } else {
       redFunction();
@@ -105,23 +108,11 @@ function testReber() {
       if (c === 't') {
         i++;
         c = word[i];
-        data = {
-          'x': 106,
-          'y': 162,
-          'dx': 185,
-          'dy': 80,
-        }
-        points.push(data);
+        points.push({'dx': point_2.dx, 'dy': point_2.dy});
       }
       if (c === 'p') {
         i++;
-        data = {
-          'x': 106,
-          'y': 162,
-          'dx': 185,
-          'dy': 242,
-        }
-        points.push(data);
+        points.push({'dx': point_7.dx, 'dy': point_7.dy});
         loop(word, i);
         break;
       }
@@ -134,24 +125,12 @@ function testReber() {
       while ((c === 's')) {
         i++;
         c = word[i];
-        data = {
-          'x': 185,
-          'y': 80,
-          'dx': 185,
-          'dy': 80,
-        }
-        points.push(data);
+        points.push({'dx': point_3.dx, 'dy': point_3.dy});
       }
       if (c === 'x') {
         i++;
         c = word[i];
-        data = {
-          'x': 185,
-          'y': 80,
-          'dx': 285,
-          'dy': 80,
-        }
-        points.push(data);
+        points.push({'dx': point_4.dx, 'dy': point_4.dy});
       }
     } else {
       redFunction();
@@ -159,44 +138,25 @@ function testReber() {
       break;
     }
     if ((c === 's') || (c === 'x')) {
-
       if (c === 'x') {
         i++;
-        data = {
-          'x': 285,
-          'y': 80,
-          'dx': 185,
-          'dy': 242,
-        }
-        points.push(data);
+        points.push({'dx': point_7.dx, 'dy': point_7.dy});
         loop(word, i);
         break;
       }
       if (c === 's') {
         i++;
         c = word[i];
-        data = {
-          'x': 285,
-          'y': 80,
-          'dx': 365,
-          'dy': 162,
-        }
-        points.push(data);
+        points.push({'dx': point_5.dx, 'dy': point_5.dy});
         if (c === 'e') {
           i++;
           c = word[i];
-          data = {
-            'x': 360,
-            'y': 162,
-            'dx': 470,
-            'dy': 162,
-          }
           if (c) {
             redFunction();
             createFalseTable(word);
             break;
           }
-          points.push(data);
+          points.push({'dx': point_6.dx, 'dy': point_6.dy});
           greenFunction();
           createTable(word);
         }
@@ -214,24 +174,12 @@ function testReber() {
       while (c === 't') {
         i++;
         c = word[i];
-        data = {
-          'x': 185,
-          'y': 242,
-          'dx': 185,
-          'dy': 242,
-        }
-        points.push(data);
+        points.push({'dx': point_7.dx, 'dy': point_7.dy});
       }
       if (c === 'v') {
         i++;
         c = word[i];
-        data = {
-          'x': 185,
-          'y': 242,
-          'dx': 285,
-          'dy': 242,
-        }
-        points.push(data);
+        points.push({'dx': point_8.dx, 'dy': point_8.dy});
       }
     } else {
       redFunction();
@@ -241,53 +189,26 @@ function testReber() {
       if (c === 'p') {
         i++;
         c = word[i];
-        data = {
-          'x': 285,
-          'y': 242,
-          'dx': 285,
-          'dy': 80,
-        }
-        points.push(data);
-
+        points.push({'dx': point_4.dx, 'dy': point_4.dy});
         if ((c === 'x') || (c === 's')) {
           if (c === 'x') {
             i++;
-            data = {
-              'x': 285,
-              'y': 80,
-              'dx': 185,
-              'dy': 242,
-            }
-            points.push(data);
+            points.push({'dx': point_7.dx, 'dy': point_7.dy});
             loop(word, i)
           }
           if (c === 's') {
             i++;
             c = word[i];
-            data = {
-              'x': 285,
-              'y': 80,
-              'dx': 365,
-              'dy': 162,
-            }
-            points.push(data);
-
+            points.push({'dx': point_5.dx, 'dy': point_5.dy});
             if (c === 'e') {
               i++;
               c = word[i];
-              console.log(c)
-              data = {
-                'x': 360,
-                'y': 162,
-                'dx': 470,
-                'dy': 162,
-              }
               if (c) {
                 redFunction();
                 createFalseTable(word);
                 return;
               }
-              points.push(data);
+              points.push({'dx': point_6.dx, 'dy': point_6.dy});
               greenFunction();
               createTable(word);
             } else {
@@ -303,30 +224,16 @@ function testReber() {
       if (c === 'v') {
         i++;
         c = word[i];
-        data = {
-          'x': 285,
-          'y': 242,
-          'dx': 365,
-          'dy': 162,
-        }
-        points.push(data);
+        points.push({'dx': point_5.dx, 'dy': point_5.dy});
         if (c === 'e') {
-          // DONE
           i++;
           c = word[i];
-          console.log(c)
-          data = {
-            'x': 360,
-            'y': 162,
-            'dx': 470,
-            'dy': 162,
-          }
           if (c) {
             redFunction();
             createFalseTable(word);
             return;
           }
-          points.push(data);
+          points.push({'dx': point_6.dx, 'dy': point_6.dy});
           greenFunction();
           createTable(word);
         } else {
