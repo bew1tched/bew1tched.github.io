@@ -12,12 +12,17 @@
     background-image: url("reber.gif");
     display: block;
     margin: 10px auto;
+    border: solid 1px darkgrey;
   }
 
-  .container {
+  .card {
     display: block;
     margin: auto;
-    width: 480px;
+    width: 500px;
+  }
+  .card-header {
+    font-size: larger;
+    margin: 10px 5px;
   }
 
   .row {
@@ -40,6 +45,8 @@
 
   .slidecontainer {
     display: flex;
+    width: 480px;
+    padding: 10px;
   }
 
   .form-control {
@@ -49,47 +56,61 @@
   .slider:hover {
     opacity: 1;
   }
-
-
 </style>
 <body>
-<canvas id="myCanvas" width="480" height="320"></canvas>
-<div class="container">
-  <div class="slidecontainer">
-    <div class="column">
-      <label>
-        Set animation speed
-      </label>
-    </div>
-    <div class="column">
-      <input type="range" min="1" max="10" value="5" class="slider" id="myRange">
-    </div>
+
+<div class="card">
+  <div class="card-header">
+    Reber Grammar
   </div>
-  <form onsubmit="return false">
+  <div class="card-body">
+    <canvas id="myCanvas" width="480" height="320"></canvas>
+
+    <div class="slidecontainer">
+      <div class="column">
+        <label>
+          Set animation speed
+        </label>
+      </div>
+      <div class="column">
+        <input type="range" min="1" max="10" value="5" class="slider" id="myRange">
+      </div>
+    </div>
+    <form onsubmit="return false">
+      <div class="row">
+
+        <input class="form-control" type="text" id="myText" placeholder="Type a word..." required>
+
+        <input class="form-control" type="text" id="yourText" value="" disabled>
+        <button class="btn btn-primary" id="testReber" data-toggle="tooltip" data-placement="left"
+                title="Test the word">
+          Test Word
+        </button>
+        <button class="btn btn-primary" id="animateReber" data-toggle="tooltip" data-placement="left"
+                title="Animate the word">Animate Word
+        </button>
+        <button class="btn btn-primary" id="stepReber" data-toggle="tooltip" data-placement="left"
+                title="Animate the word stepwise">Step trough Word
+        </button>
+
+      </div>
+    </form>
+
     <div class="row">
-      <input class="form-control" type="text" id="myText" placeholder="Type a word..." required>
-      <input class="form-control" type="text" id="yourText" value="" disabled>
-      <button class="btn btn-primary" id="testReber" data-toggle="tooltip" data-placement="left" title="Test the word">
-        Test Word
+      <button class="btn" id="getReber" onclick="getReber()" data-toggle="tooltip" data-placement="left"
+              title="Create a Reber Word">Create Reber Word
       </button>
-      <button class="btn btn-primary" id="animateReber" data-toggle="tooltip" data-placement="left"
-              title="Animate the word">Animate Word
-      </button>
-      <button class="btn btn-primary" id="stepReber" data-toggle="tooltip" data-placement="left"
-              title="Animate the word stepwise">Step trough Word
+      <button class="btn" id="getNonReber" onclick="getFalseReber()" data-toggle="tooltip" data-placement="left"
+              title="Create a Non-Reber word">Create Non-Reber Word
       </button>
     </div>
-  </form>
-  <div class="row">
-    <button class="btn" id="getReber" onclick="getReber()" data-toggle="tooltip" data-placement="left"
-            title="Create a Reber Word">Create Reber Word
-    </button>
-    <button class="btn" id="getNonReber" onclick="getFalseReber()" data-toggle="tooltip" data-placement="left"
-            title="Create a Non-Reber word">Create Non-Reber Word
-    </button>
   </div>
+</div>
+
+<div class="card">
   <div class="tables">
     <div class="column">
+
       <table class="table" id="myTable">
         <thead>
         <tr>
@@ -98,10 +119,14 @@
         </thead>
         <tbody id="myTablerow">
         <tr>
+
         </tr>
       </table>
     </div>
+
+
     <div class="column">
+
       <table class="table" id="myFalseTable">
         <thead>
         <tr>
@@ -110,6 +135,7 @@
         </thead>
         <tbody id="myFalseTablerow">
         <tr>
+
         </tr>
       </table>
     </div>
@@ -117,6 +143,7 @@
 </div>
 
 <script src="js/main.js"></script>
+
 
 </body>
 </html>
