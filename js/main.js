@@ -44,7 +44,6 @@ function drawBall() {
 }
 
 async function drawIt(j) {
-  console.log(points)
   dx = points[j]['dx']
   dy = points[j]['dy']
   ctx.clearRect(0, 0, canvas.width, canvas.height);
