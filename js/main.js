@@ -46,7 +46,7 @@ function drawHalfCircleS() {
   ctx.beginPath();
   ctx.arc(x-1, y-33, 19, 0.9, Math.PI * 0.85, true);
   ctx.lineWidth = 5;
-  ctx.strokeStyle = "rgba(152,245,255,0.8)";
+  ctx.strokeStyle = "rgba(65,105,225,0.8)";
   ctx.stroke();
 }
 
@@ -54,14 +54,14 @@ function drawHalfCircleT() {
   ctx.beginPath();
   ctx.arc(x - 6, y + 36, 19, 0, Math.PI * 1.5, false);
   ctx.lineWidth = 5;
-  ctx.strokeStyle = "rgba(152,245,255,0.8)";
+  ctx.strokeStyle = "rgba(65,105,225,0.8)";
   ctx.stroke();
 }
 
 function drawBall() {
   ctx.beginPath();
   ctx.arc(dx, dy, 16, 0, Math.PI * 2);
-  ctx.fillStyle = "rgba(152,245,255,1)";
+  ctx.fillStyle = "rgba(65,105,225,1)";
   ctx.fill();
   ctx.closePath();
 }
