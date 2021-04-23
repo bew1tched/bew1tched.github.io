@@ -11,7 +11,7 @@ point_1 = {'x': 0, 'y': 161, 'dx': 96, 'dy': 161};
 point_2 = {'x': 96, 'y': 161, 'dx': 184, 'dy': 71};
 point_4 = {'x': 184, 'y': 71, 'dx': 296, 'dy': 71};
 point_5 = {'x': 296, 'y': 71, 'dx': 382, 'dy': 161};
-point_6 = {'x': 382, 'y': 161, 'dx': 465, 'dy': 161};
+point_6 = {'x': 382, 'y': 161, 'dx': 463, 'dy': 161};
 point_7 = {'x': 96, 'y': 161, 'dx': 185, 'dy': 251};
 point_8 = {'x': 185, 'y': 251, 'dx': 296, 'dy': 251};
 point_9 = {'x': 296, 'y': 251, 'dx': 382, 'dy': 161};
@@ -46,7 +46,7 @@ function drawHalfCircleS() {
   ctx.beginPath();
   ctx.arc(x-1, y-33, 19, 0.9, Math.PI * 0.85, true);
   ctx.lineWidth = 5;
-  ctx.strokeStyle = "rgba(65,105,225,0.8)";
+  ctx.strokeStyle = "rgba(2, 117, 216,0.8)";
   ctx.stroke();
 }
 
@@ -54,14 +54,14 @@ function drawHalfCircleT() {
   ctx.beginPath();
   ctx.arc(x - 6, y + 36, 19, 0, Math.PI * 1.5, false);
   ctx.lineWidth = 5;
-  ctx.strokeStyle = "rgba(65,105,225,0.8)";
+  ctx.strokeStyle = "rgba(2, 117, 216,0.8)";
   ctx.stroke();
 }
 
 function drawBall() {
   ctx.beginPath();
   ctx.arc(dx, dy, 16, 0, Math.PI * 2);
-  ctx.fillStyle = "rgba(65,105,225,1)";
+  ctx.fillStyle = "rgba(2, 117, 216,1)";
   ctx.fill();
   ctx.closePath();
 }
@@ -71,7 +71,7 @@ function drawLine() {
   ctx.moveTo(x, y);
   ctx.lineTo(dx, dy);
   ctx.lineWidth = 5;
-  ctx.strokeStyle = "rgba(65,105,225,0.8)";
+  ctx.strokeStyle = "rgba(2, 117, 216,0.8)";
   ctx.stroke();
 }
 
