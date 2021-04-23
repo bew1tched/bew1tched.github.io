@@ -71,7 +71,7 @@ function drawLine() {
   ctx.moveTo(x, y);
   ctx.lineTo(dx, dy);
   ctx.lineWidth = 5;
-  ctx.strokeStyle = "rgba(152,245,255,0.8)";
+  ctx.strokeStyle = "rgba(65,105,225,0.8)";
   ctx.stroke();
 }
 
