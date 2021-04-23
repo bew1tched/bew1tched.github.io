@@ -1,19 +1,26 @@
 const canvas = document.getElementById("myCanvas");
 const ctx = canvas.getContext("2d");
 let points = []
-let data = {}
 
+let x;
+let y;
 let dx;
 let dy;
 
-point_1 = {'dx': 106, 'dy': 163};
-point_2 = {'dx': 186, 'dy': 83};
-point_3 = {'dx': 186, 'dy': 83};
-point_4 = {'dx': 286, 'dy': 83};
-point_5 = {'dx': 366, 'dy': 163};
-point_6 = {'dx': 460, 'dy': 163};
-point_7 = {'dx': 186, 'dy': 243};
-point_8 = {'dx': 286, 'dy': 243};
+point_1 = {'x': 0, 'y': 161, 'dx': 96, 'dy': 161};
+point_2 = {'x': 96, 'y': 161, 'dx': 184, 'dy': 71};
+point_4 = {'x': 184, 'y': 71, 'dx': 296, 'dy': 71};
+point_5 = {'x': 296, 'y': 71, 'dx': 382, 'dy': 161};
+point_6 = {'x': 382, 'y': 161, 'dx': 465, 'dy': 161};
+point_7 = {'x': 106, 'y': 163, 'dx': 186, 'dy': 243};
+point_8 = {'x': 185, 'y': 251, 'dx': 296, 'dy': 251};
+point_9 = {'x': 296, 'y': 251, 'dx': 382, 'dy': 161};
+
+point_S = {'x': 184, 'y': 71, 'dx': 184, 'dy': 71};
+point_T = {'x': 184, 'y': 251, 'dx': 184, 'dy': 251};
+point_P = {'x': 296, 'y': 251, 'dx': 296, 'dy': 71};
+point_X = {'x': 298, 'y': 71, 'dx': 185, 'dy': 251};
+
 
 let word = "";
 let old_word = "";
@@ -35,19 +42,54 @@ slider.oninput = function () {
   speed = this.value;
 }
 
+function drawHalfCircleS() {
+  ctx.beginPath();
+  ctx.arc(x-1, y-33, 19, 0.9, Math.PI * 0.85, true);
+  ctx.lineWidth = 5;
+  ctx.strokeStyle = "rgba(152,245,255,0.8)";
+  ctx.stroke();
+}
+
+function drawHalfCircleT() {
+  ctx.beginPath();
+  ctx.arc(x - 6, y + 36, 19, 0, Math.PI * 1.5, false);
+  ctx.lineWidth = 5;
+  ctx.strokeStyle = "rgba(152,245,255,0.8)";
+  ctx.stroke();
+}
+
 function drawBall() {
   ctx.beginPath();
-  ctx.arc(dx, dy, 15, 0, Math.PI * 2);
+  ctx.arc(dx, dy, 16, 0, Math.PI * 2);
   ctx.fillStyle = "rgba(152,245,255,1)";
   ctx.fill();
   ctx.closePath();
 }
 
+function drawLine() {
+  ctx.beginPath();
+  ctx.moveTo(x, y);
+  ctx.lineTo(dx, dy);
+  ctx.lineWidth = 5;
+  ctx.strokeStyle = "rgba(152,245,255,0.8)";
+  ctx.stroke();
+}
+
 async function drawIt(j) {
+  x = points[j]['x']
+  y = points[j]['y']
   dx = points[j]['dx']
   dy = points[j]['dy']
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   await sleep(100);
+
+  if ((x === 184) && (dx === x) && (y === 71) && (dy === y)) {
+    drawHalfCircleS();
+  }
+  if ((x === 184) && (dx === x) && (y === 251) && (dy === y)) {
+    drawHalfCircleT();
+  }
+  drawLine();
   drawBall();
 }
 
@@ -71,6 +113,7 @@ function getReber() {
   word = rebers[Math.floor(Math.random() * rebers.length)];
   document.getElementById("myText").value = word.toUpperCase();
   testReber();
+  disableReberTest();
 }
 
 function getFalseReber() {
@@ -81,8 +124,6 @@ function getFalseReber() {
 
 function testReber() {
   word = document.getElementById("myText").value.toLocaleString().toLowerCase();
-  console.log(word)
-  console.log(old_word)
   if (word.toLowerCase() === old_word.toLowerCase()) {
     return;
   }
@@ -97,7 +138,7 @@ function testReber() {
     if (c === 'b') {
       i++;
       c = word[i];
-      points.push({'dx': point_1.dx, 'dy': point_1.dy});
+      points.push(point_1);
 
     } else {
       redFunction(word);
@@ -107,11 +148,11 @@ function testReber() {
       if (c === 't') {
         i++;
         c = word[i];
-        points.push({'dx': point_2.dx, 'dy': point_2.dy});
+        points.push(point_2);
       }
       if (c === 'p') {
         i++;
-        points.push({'dx': point_7.dx, 'dy': point_7.dy});
+        points.push(point_7);
         loop(word, i);
         break;
       }
@@ -123,12 +164,12 @@ function testReber() {
       while ((c === 's')) {
         i++;
         c = word[i];
-        points.push({'dx': point_3.dx, 'dy': point_3.dy});
+        points.push(point_S);
       }
       if (c === 'x') {
         i++;
         c = word[i];
-        points.push({'dx': point_4.dx, 'dy': point_4.dy});
+        points.push(point_4);
       }
     } else {
       redFunction(word);
@@ -137,14 +178,14 @@ function testReber() {
     if ((c === 's') || (c === 'x')) {
       if (c === 'x') {
         i++;
-        points.push({'dx': point_7.dx, 'dy': point_7.dy});
+        points.push(point_X);
         loop(word, i);
         break;
       }
       if (c === 's') {
         i++;
         c = word[i];
-        points.push({'dx': point_5.dx, 'dy': point_5.dy});
+        points.push(point_5);
         if (c === 'e') {
           let t_word = word;
           i++;
@@ -153,7 +194,7 @@ function testReber() {
             redFunction(t_word);
             break;
           }
-          points.push({'dx': point_6.dx, 'dy': point_6.dy});
+          points.push(point_6);
           greenFunction(word);
         }
       }
@@ -169,12 +210,12 @@ function testReber() {
       while (c === 't') {
         i++;
         c = word[i];
-        points.push({'dx': point_7.dx, 'dy': point_7.dy});
+        points.push(point_T);
       }
       if (c === 'v') {
         i++;
         c = word[i];
-        points.push({'dx': point_8.dx, 'dy': point_8.dy});
+        points.push(point_8);
       }
     } else {
       redFunction(word);
@@ -183,17 +224,17 @@ function testReber() {
       if (c === 'p') {
         i++;
         c = word[i];
-        points.push({'dx': point_4.dx, 'dy': point_4.dy});
+        points.push(point_P);
         if ((c === 'x') || (c === 's')) {
           if (c === 'x') {
             i++;
-            points.push({'dx': point_7.dx, 'dy': point_7.dy});
+            points.push(point_X);
             loop(word, i)
           }
           if (c === 's') {
             i++;
             c = word[i];
-            points.push({'dx': point_5.dx, 'dy': point_5.dy});
+            points.push(point_5);
             if (c === 'e') {
               i++;
               c = word[i];
@@ -201,7 +242,7 @@ function testReber() {
                 redFunction(word);
                 return;
               }
-              points.push({'dx': point_6.dx, 'dy': point_6.dy});
+              points.push(point_6);
               greenFunction(word);
             } else {
               redFunction(word);
@@ -214,7 +255,7 @@ function testReber() {
       if (c === 'v') {
         i++;
         c = word[i];
-        points.push({'dx': point_5.dx, 'dy': point_5.dy});
+        points.push(point_9);
         if (c === 'e') {
           i++;
           c = word[i];
@@ -222,7 +263,7 @@ function testReber() {
             redFunction(word);
             return;
           }
-          points.push({'dx': point_6.dx, 'dy': point_6.dy});
+          points.push(point_6);
           greenFunction(word);
         } else {
           redFunction(word);
@@ -242,8 +283,28 @@ async function demo() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 }
 
+function enableButtons() {
+  document.getElementById("animateReber").removeAttribute("disabled");
+  document.getElementById("stepReber").removeAttribute("disabled");
+
+}
+
+function disableButtons() {
+  document.getElementById("stepReber").setAttribute('disabled', 'true');
+  document.getElementById("animateReber").setAttribute('disabled', 'true');
+}
+
+function enableReberTest() {
+  document.getElementById("testReber").removeAttribute("disabled");
+}
+
+function disableReberTest() {
+  document.getElementById("testReber").setAttribute('disabled', 'true');
+}
+
 function animateDemo() {
-  demo();
+  disableButtons();
+  demo().then(r => enableButtons());
 }
 
 let k = 0;
@@ -269,8 +330,8 @@ function redFunction(word) {
   let element = document.getElementById("yourText");
   element.value = word.toUpperCase() + " is not a Reber word!";
   element.style.color = "red";
-  document.getElementById("stepReber").setAttribute('disabled', 'true');
-  document.getElementById("animateReber").setAttribute('disabled', 'true');
+  disableButtons();
+  disableReberTest();
   createFalseTable(word);
   old_word = word;
 }
@@ -278,12 +339,11 @@ function redFunction(word) {
 function greenFunction(word) {
   document.getElementById("yourText").value = word.toUpperCase();
   document.getElementById("yourText").style.color = "green";
-  document.getElementById("stepReber").removeAttribute("disabled");
-  document.getElementById("animateReber").removeAttribute("disabled");
+  enableButtons();
+  disableReberTest();
   createTable(word);
   old_word = word.toLowerCase();
 }
-
 
 let los = document.getElementById('testReber');
 los.addEventListener('click', testReber, true);
@@ -293,3 +353,7 @@ animate.addEventListener('click', animateDemo, true);
 
 let step = document.getElementById('stepReber');
 step.addEventListener('click', stepDemo, true);
+
+let input = document.getElementById('myText');
+input.addEventListener('keypress', enableReberTest, true);
+input.addEventListener('input', enableReberTest, true);
