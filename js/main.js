@@ -52,7 +52,7 @@ async function drawIt(j) {
 }
 
 function createTable(word) {
-  if ((word !== "") && (word !== this.word)) {
+  if ((word !== "") || (word !== this.word)) {
     const row = table.insertRow(0);
     const cell1 = row.insertCell(0);
     cell1.innerHTML = word.toUpperCase();
@@ -60,7 +60,7 @@ function createTable(word) {
 }
 
 function createFalseTable(word) {
-  if ((word !== "") && (word !== this.word)) {
+  if ((word !== "") || (word !== this.word)) {
     const row = falseTable.insertRow(0);
     const cell1 = row.insertCell(0);
     cell1.innerHTML = word.toUpperCase();
@@ -76,13 +76,14 @@ function getReber() {
 function getFalseReber() {
   word = non_rebers[Math.floor(Math.random() * non_rebers.length)];
   document.getElementById("myText").value = word.toUpperCase();
-  createFalseTable(word);
-  redFunction();
+  redFunction(word);
 }
 
 function testReber() {
   word = document.getElementById("myText").value.toLocaleString().toLowerCase();
-  if (word === old_word) {
+  console.log(word)
+  console.log(old_word)
+  if (word.toLowerCase() === old_word.toLowerCase()) {
     return;
   }
 
@@ -99,8 +100,7 @@ function testReber() {
       points.push({'dx': point_1.dx, 'dy': point_1.dy});
 
     } else {
-      redFunction();
-      createFalseTable(word);
+      redFunction(word);
       break;
     }
     if ((c === 't') || (c === 'p')) {
@@ -116,8 +116,7 @@ function testReber() {
         break;
       }
     } else {
-      redFunction();
-      createFalseTable(word);
+      redFunction(word);
       break;
     }
     if ((c === 's') || (c === 'x')) {
@@ -132,8 +131,7 @@ function testReber() {
         points.push({'dx': point_4.dx, 'dy': point_4.dy});
       }
     } else {
-      redFunction();
-      createFalseTable(word);
+      redFunction(word);
       break;
     }
     if ((c === 's') || (c === 'x')) {
@@ -148,21 +146,19 @@ function testReber() {
         c = word[i];
         points.push({'dx': point_5.dx, 'dy': point_5.dy});
         if (c === 'e') {
+          let t_word = word;
           i++;
           c = word[i];
           if (c) {
-            redFunction();
-            createFalseTable(word);
+            redFunction(t_word);
             break;
           }
           points.push({'dx': point_6.dx, 'dy': point_6.dy});
-          greenFunction();
-          createTable(word);
+          greenFunction(word);
         }
       }
     } else {
-      redFunction();
-      createFalseTable(word);
+      redFunction(word);
       break;
     }
   }
@@ -181,8 +177,7 @@ function testReber() {
         points.push({'dx': point_8.dx, 'dy': point_8.dy});
       }
     } else {
-      redFunction();
-      createFalseTable(word);
+      redFunction(word);
     }
     if ((c === 'v') || (c === 'p')) {
       if (c === 'p') {
@@ -203,21 +198,17 @@ function testReber() {
               i++;
               c = word[i];
               if (c) {
-                redFunction();
-                createFalseTable(word);
+                redFunction(word);
                 return;
               }
               points.push({'dx': point_6.dx, 'dy': point_6.dy});
-              greenFunction();
-              createTable(word);
+              greenFunction(word);
             } else {
-              redFunction();
-              createFalseTable(word);
+              redFunction(word);
             }
           }
         } else {
-          redFunction();
-          createFalseTable(word);
+          redFunction(word);
         }
       }
       if (c === 'v') {
@@ -228,21 +219,17 @@ function testReber() {
           i++;
           c = word[i];
           if (c) {
-            redFunction();
-            createFalseTable(word);
+            redFunction(word);
             return;
           }
           points.push({'dx': point_6.dx, 'dy': point_6.dy});
-          greenFunction();
-          createTable(word);
+          greenFunction(word);
         } else {
-          redFunction();
-          createFalseTable(word);
+          redFunction(word);
         }
       }
     } else {
-      redFunction();
-      createFalseTable(word);
+      redFunction(word);
     }
   }
 }
@@ -278,25 +265,23 @@ function stepIt() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 }
 
-function redFunction() {
+function redFunction(word) {
   let element = document.getElementById("yourText");
   element.value = word.toUpperCase() + " is not a Reber word!";
   element.style.color = "red";
   document.getElementById("stepReber").setAttribute('disabled', 'true');
   document.getElementById("animateReber").setAttribute('disabled', 'true');
-
+  createFalseTable(word);
   old_word = word;
-  word = "";
 }
 
-function greenFunction() {
+function greenFunction(word) {
   document.getElementById("yourText").value = word.toUpperCase();
   document.getElementById("yourText").style.color = "green";
   document.getElementById("stepReber").removeAttribute("disabled");
   document.getElementById("animateReber").removeAttribute("disabled");
-
-  old_word = word;
-  word = "";
+  createTable(word);
+  old_word = word.toLowerCase();
 }
 
 
