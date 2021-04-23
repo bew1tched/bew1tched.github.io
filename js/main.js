@@ -12,7 +12,7 @@ point_2 = {'x': 96, 'y': 161, 'dx': 184, 'dy': 71};
 point_4 = {'x': 184, 'y': 71, 'dx': 296, 'dy': 71};
 point_5 = {'x': 296, 'y': 71, 'dx': 382, 'dy': 161};
 point_6 = {'x': 382, 'y': 161, 'dx': 465, 'dy': 161};
-point_7 = {'x': 106, 'y': 163, 'dx': 186, 'dy': 243};
+point_7 = {'x': 96, 'y': 161, 'dx': 185, 'dy': 251};
 point_8 = {'x': 185, 'y': 251, 'dx': 296, 'dy': 251};
 point_9 = {'x': 296, 'y': 251, 'dx': 382, 'dy': 161};
 
@@ -357,3 +357,4 @@ step.addEventListener('click', stepDemo, true);
 let input = document.getElementById('myText');
 input.addEventListener('keypress', enableReberTest, true);
 input.addEventListener('input', enableReberTest, true);
+
