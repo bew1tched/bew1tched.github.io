@@ -82,7 +82,7 @@ function drawLine() {
 }
 
 async function drawIt(j) {
-    this.color = "lightgreen";
+  this.color = "lightgreen";
 
   x = points[j]['x']
   y = points[j]['y']
@@ -396,7 +396,8 @@ function redFunction(word) {
   let element = document.getElementById("yourText");
   element.value = word.toUpperCase() + " is not a Reber word!";
   element.style.color = "red";
-
+  let extra_point = points[points.length - 1];
+  points.push({'x': extra_point.dx, 'y': extra_point.dy, 'dx': extra_point.dx, 'dy': extra_point.dy});
   this.is_reber = false;
   enableButtons();
   const row = reberTable.rows[reberTable.rows.length - 1];
