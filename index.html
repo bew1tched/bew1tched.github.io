@@ -20,10 +20,11 @@
   .border {
     border: darkgrey 1px solid;
   }
-.container {
-  padding: 50px;
-  width: 1200px;
-}
+
+  .container {
+    margin: 10px auto 10px auto;
+  }
+
   .container:after {
     content: "";
     display: table;
@@ -63,12 +64,17 @@
 
   .column {
     float: left;
+    width: 33%;
+    padding: 0;
+  }
+    .tablecolumn {
+    float: left;
     width: 50%;
     padding: 0;
-
   }
 
   .row {
+    width: 100%;
     margin-bottom: 10px;
   }
 
@@ -79,24 +85,27 @@
     clear: both;
   }
 
-  .tables {
-    display: flex;
-    width: 500px;
-    margin: 10px auto;
-    flex: 50%;
-  }
-
   .slider:hover {
     opacity: 1;
   }
+
   .footer {
-  position: fixed;
-  left: 0;
-  bottom: 0;
-  width: 100%;
-  color: black;
-  text-align: center;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    color: black;
+    text-align: center;
+  }
+.grid-container {
+  display: grid;
+  grid-template-columns: 300px 500px 400px;
+  grid-template-rows: auto;
+  gap: 10px 10px;
+  grid-template-areas:
+    ". . .";
 }
+
 </style>
 <body>
 
@@ -106,99 +115,118 @@
       <p>Reber Grammar</p>
     </div>
   </div>
+</div>
+<div class="container">
 
-  <div class="row">
-    <div class="column">
+<div class="grid-container">
+      <div class="row">
 
-      <div class="card-body">
-        <div class="row">
-          <div class="border">
-            <canvas id="myCanvas" width="480" height="320"></canvas>
-          </div>
-        </div>
+    <table class="table" id="reberTable">
+      <thead>
+      <tr>
+        <th scope="col">Q</th>
+        <th scope="col">&#8721;</th>
+        <th scope="col">Q</th>
+      </tr>
+      </thead>
+      <tbody id="reberRow">
 
-        <form onsubmit="return false">
-          <div class="row">
-            <input class="form-control" type="text" id="myText" placeholder="Type a word..." required>
-          </div>
+      </tbody>
 
-          <div class="row">
-            <input class="form-control" type="text" id="yourText" value="" disabled>
-          </div>
+    </table>
+      </div>
 
-          <div class="row">
-            <div class="column">
-              <button class="btn" id="testReber" data-toggle="tooltip" data-placement="left" disabled
-                      title="Test the word">
-                <span class="material-icons">check</span></button>
-              <button class="btn" id="animateReber" data-toggle="tooltip" data-placement="left" disabled
-                      title="Animate the word">
-                <span class="material-icons">play_arrow</span></button>
-              <button class="btn" id="stepReber" data-toggle="tooltip" data-placement="left" disabled
-                      title="Animate the word stepwise"><span class="material-icons">skip_next</span>
-              </button>
-            </div>
-
-            <div class="column">
-              <label>
-                Set animation speed
-              </label>
-              <input type="range" min="1" max="10" value="5" class="slider" id="myRange">
-            </div>
-          </div>
-
-        </form>
-
-        <div class="row">
-          <button class="btn" id="getReber" onclick="getReber()" data-toggle="tooltip" data-placement="left"
-                  title="Create a Reber Word">Create Reber Word
-          </button>
-          <button class="btn" id="getNonReber" onclick="getFalseReber()" data-toggle="tooltip" data-placement="left"
-                  title="Create a Non-Reber word">Create Non-Reber Word
-          </button>
+    <div class="card-body">
+      <div class="row">
+        <div class="border">
+          <canvas id="myCanvas" width="480" height="320"></canvas>
         </div>
       </div>
-    </div>
-    <div class="column">
-      <div class="tables">
-        <div class="column">
 
-          <table class="table" id="myTable">
-            <thead>
-            <tr>
-              <th scope="col">Reber Word</th>
-            </tr>
-            </thead>
-            <tbody id="myTablerow">
-            <tr>
-
-            </tr>
-          </table>
+      <form onsubmit="return false">
+        <div class="row">
+          <input class="form-control" type="text" id="myText" placeholder="Type a word..." required>
         </div>
 
-
-        <div class="column">
-
-          <table class="table" id="myFalseTable">
-            <thead>
-            <tr>
-              <th scope="col">Non-Reber Word</th>
-            </tr>
-            </thead>
-            <tbody id="myFalseTablerow">
-            <tr>
-
-            </tr>
-          </table>
+        <div class="row">
+          <input class="form-control" type="text" id="yourText" value="" disabled>
         </div>
+
+        <div class="row">
+          <div class="column">
+            <button class="btn" id="testReber" data-toggle="tooltip" data-placement="left" disabled
+                    title="Test the word">
+              <span class="material-icons">check</span></button>
+            <button class="btn" id="animateReber" data-toggle="tooltip" data-placement="left" disabled
+                    title="Animate the word">
+              <span class="material-icons">play_arrow</span></button>
+            <button class="btn" id="stepReber" data-toggle="tooltip" data-placement="left" disabled
+                    title="Animate the word stepwise"><span class="material-icons">skip_next</span>
+            </button>
+          </div>
+
+          <div class="column">
+            <label>
+              Set animation speed
+            </label>
+            <input type="range" min="1" max="10" value="5" class="slider" id="myRange">
+          </div>
+        </div>
+
+      </form>
+
+      <div class="row">
+        <button class="btn" id="getReber" onclick="getReber()" data-toggle="tooltip" data-placement="left"
+                title="Create a Reber Word">Create Reber Word
+        </button>
+        <button class="btn" id="getNonReber" onclick="getFalseReber()" data-toggle="tooltip" data-placement="left"
+                title="Create a Non-Reber word">Create Non-Reber Word
+        </button>
       </div>
     </div>
+
+    <div class="row">
+      <div class="tablecolumn">
+
+        <table class="table" id="myTable">
+          <thead>
+          <tr>
+            <th scope="col">Reber Word</th>
+          </tr>
+          </thead>
+          <tbody id="myTablerow">
+          <tr>
+
+          </tr>
+          </tbody>
+        </table>
+      </div>
+
+
+      <div class="column">
+
+        <table class="table" id="myFalseTable">
+          <thead>
+          <tr>
+            <th scope="col">Non-Reber Word</th>
+          </tr>
+          </thead>
+          <tbody id="myFalseTablerow">
+          <tr>
+
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+</div>
+</div>
+  <script src="js/main.js"></script>
+
+  <div class="footer">
+    <p></p>
   </div>
 </div>
-<script src="js/main.js"></script>
-
-<div class="footer">
-  <p> </p>
 </div>
 
 </body>

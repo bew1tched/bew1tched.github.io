@@ -7,7 +7,8 @@ let y;
 let dx;
 let dy;
 
-point_1 = {'x': 0, 'y': 161, 'dx': 96, 'dy': 161};
+point_0 = {'x': 16, 'y': 161, 'dx': 16, 'dy': 161};
+point_1 = {'x': 32, 'y': 161, 'dx': 96, 'dy': 161};
 point_2 = {'x': 96, 'y': 161, 'dx': 184, 'dy': 71};
 point_4 = {'x': 184, 'y': 71, 'dx': 296, 'dy': 71};
 point_5 = {'x': 296, 'y': 71, 'dx': 382, 'dy': 161};
@@ -15,18 +16,23 @@ point_6 = {'x': 382, 'y': 161, 'dx': 463, 'dy': 161};
 point_7 = {'x': 96, 'y': 161, 'dx': 185, 'dy': 251};
 point_8 = {'x': 185, 'y': 251, 'dx': 296, 'dy': 251};
 point_9 = {'x': 296, 'y': 251, 'dx': 382, 'dy': 161};
+point_10 = {'x': 463, 'y': 161, 'dx': 463, 'dy': 161};
 
 point_S = {'x': 184, 'y': 71, 'dx': 184, 'dy': 71};
 point_T = {'x': 184, 'y': 251, 'dx': 184, 'dy': 251};
 point_P = {'x': 296, 'y': 251, 'dx': 296, 'dy': 71};
 point_X = {'x': 298, 'y': 71, 'dx': 185, 'dy': 251};
 
+color = "green";
 
 let word = "";
 let old_word = "";
+is_reber = true;
 
 let table = document.getElementById("myTablerow");
 let falseTable = document.getElementById("myFalseTablerow");
+let reberTable = document.getElementById("reberTable");
+
 
 let rebers = ['bpvve', 'BTSSXXTVVE', 'BTXXVPSE', 'BPVPXVPXVPXVVE', 'BTSXXVPSE', 'btsxse', 'btsxxtvve']
 let non_rebers = ['BTSSPXSE', 'BPTVVB', 'BTXXVVSE', 'BPVSPSE', 'BTSSSE', 'SBTPPE', 'BVVSE', 'BTSXPE']
@@ -44,9 +50,9 @@ slider.oninput = function () {
 
 function drawHalfCircleS() {
   ctx.beginPath();
-  ctx.arc(x-1, y-33, 19, 0.9, Math.PI * 0.85, true);
+  ctx.arc(x - 1, y - 33, 19, 0.9, Math.PI * 0.85, true);
   ctx.lineWidth = 5;
-  ctx.strokeStyle = "rgba(2, 117, 216,0.8)";
+  ctx.strokeStyle = "lightgreen";
   ctx.stroke();
 }
 
@@ -54,14 +60,14 @@ function drawHalfCircleT() {
   ctx.beginPath();
   ctx.arc(x - 6, y + 36, 19, 0, Math.PI * 1.5, false);
   ctx.lineWidth = 5;
-  ctx.strokeStyle = "rgba(2, 117, 216,0.8)";
+  ctx.strokeStyle = "lightgreen";
   ctx.stroke();
 }
 
-function drawBall() {
+function drawBall(color) {
   ctx.beginPath();
   ctx.arc(dx, dy, 16, 0, Math.PI * 2);
-  ctx.fillStyle = "rgba(2, 117, 216,1)";
+  ctx.fillStyle = color;
   ctx.fill();
   ctx.closePath();
 }
@@ -71,17 +77,24 @@ function drawLine() {
   ctx.moveTo(x, y);
   ctx.lineTo(dx, dy);
   ctx.lineWidth = 5;
-  ctx.strokeStyle = "rgba(2, 117, 216,0.8)";
+  ctx.strokeStyle = "lightgreen";
   ctx.stroke();
 }
 
 async function drawIt(j) {
+    this.color = "lightgreen";
+
   x = points[j]['x']
   y = points[j]['y']
   dx = points[j]['dx']
   dy = points[j]['dy']
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   await sleep(100);
+  if (!this.is_reber) {
+    if (j === points.length - 1) {
+      this.color = "red";
+    }
+  }
 
   if ((x === 184) && (dx === x) && (y === 71) && (dy === y)) {
     drawHalfCircleS();
@@ -90,7 +103,7 @@ async function drawIt(j) {
     drawHalfCircleT();
   }
   drawLine();
-  drawBall();
+  drawBall(color);
 }
 
 function createTable(word) {
@@ -109,6 +122,19 @@ function createFalseTable(word) {
   }
 }
 
+function createReberTable(q1, s, q2) {
+  if ((word !== "") || (word !== this.word)) {
+    const row = reberTable.insertRow(-1);
+    const cell1 = row.insertCell(0);
+    cell1.innerHTML = q1;
+    const cell2 = row.insertCell(1);
+    cell2.innerHTML = s.toUpperCase();
+    const cell3 = row.insertCell(2);
+    cell3.innerHTML = q2;
+  }
+
+}
+
 function getReber() {
   word = rebers[Math.floor(Math.random() * rebers.length)];
   document.getElementById("myText").value = word.toUpperCase();
@@ -119,7 +145,7 @@ function getReber() {
 function getFalseReber() {
   word = non_rebers[Math.floor(Math.random() * non_rebers.length)];
   document.getElementById("myText").value = word.toUpperCase();
-  redFunction(word);
+  testReber();
 }
 
 function testReber() {
@@ -128,7 +154,12 @@ function testReber() {
     return;
   }
 
+  let table = document.getElementById("reberTable");
+  while (table.rows.length > 1) {
+    table.deleteRow(1);
+  }
   points = [];
+  points.push(point_0);
   k = 0;
 
   let c = '';
@@ -139,8 +170,10 @@ function testReber() {
       i++;
       c = word[i];
       points.push(point_1);
+      createReberTable(1, 'B', 2);
 
     } else {
+      createReberTable(1, c, null);
       redFunction(word);
       break;
     }
@@ -149,14 +182,19 @@ function testReber() {
         i++;
         c = word[i];
         points.push(point_2);
+        createReberTable(2, 'T', 3);
+
       }
       if (c === 'p') {
         i++;
         points.push(point_7);
+        createReberTable(2, 'P', 5);
+
         loop(word, i);
         break;
       }
     } else {
+      createReberTable(3, c, null);
       redFunction(word);
       break;
     }
@@ -165,13 +203,17 @@ function testReber() {
         i++;
         c = word[i];
         points.push(point_S);
+        createReberTable(3, 'S', 3);
       }
       if (c === 'x') {
         i++;
         c = word[i];
         points.push(point_4);
+        createReberTable(3, 'X', 4);
       }
     } else {
+      createReberTable(3, c, null);
+
       redFunction(word);
       break;
     }
@@ -179,6 +221,7 @@ function testReber() {
       if (c === 'x') {
         i++;
         points.push(point_X);
+        createReberTable(4, 'X', 5);
         loop(word, i);
         break;
       }
@@ -186,11 +229,15 @@ function testReber() {
         i++;
         c = word[i];
         points.push(point_5);
+        createReberTable(4, 'S', 7);
+
         if (c === 'e') {
           let t_word = word;
           i++;
           c = word[i];
+          createReberTable(7, 'E', 8);
           if (c) {
+            createReberTable(7, c, null);
             redFunction(t_word);
             break;
           }
@@ -199,6 +246,7 @@ function testReber() {
         }
       }
     } else {
+      createReberTable(4, c, null);
       redFunction(word);
       break;
     }
@@ -211,13 +259,16 @@ function testReber() {
         i++;
         c = word[i];
         points.push(point_T);
+        createReberTable(5, 'T', 5);
       }
       if (c === 'v') {
         i++;
         c = word[i];
         points.push(point_8);
+        createReberTable(5, 'V', 6);
       }
     } else {
+      createReberTable(5, c, null);
       redFunction(word);
     }
     if ((c === 'v') || (c === 'p')) {
@@ -225,30 +276,37 @@ function testReber() {
         i++;
         c = word[i];
         points.push(point_P);
+        createReberTable(6, 'P', 4);
         if ((c === 'x') || (c === 's')) {
           if (c === 'x') {
             i++;
             points.push(point_X);
+            createReberTable(4, 'X', 5);
             loop(word, i)
           }
           if (c === 's') {
             i++;
             c = word[i];
             points.push(point_5);
+            createReberTable(4, 'S', 7);
             if (c === 'e') {
               i++;
               c = word[i];
+              createReberTable(7, 'E', 8);
               if (c) {
+                createReberTable(7, c, null);
                 redFunction(word);
                 return;
               }
               points.push(point_6);
               greenFunction(word);
             } else {
+              createReberTable(7, c, null);
               redFunction(word);
             }
           }
         } else {
+          createReberTable(4, c, null);
           redFunction(word);
         }
       }
@@ -256,20 +314,25 @@ function testReber() {
         i++;
         c = word[i];
         points.push(point_9);
+        createReberTable(6, 'V', 7);
         if (c === 'e') {
           i++;
           c = word[i];
+          createReberTable(7, 'E', 8);
           if (c) {
+            createReberTable(7, c, null);
             redFunction(word);
             return;
           }
           points.push(point_6);
           greenFunction(word);
         } else {
+          createReberTable(7, c, null);
           redFunction(word);
         }
       }
     } else {
+      createReberTable(6, c, null);
       redFunction(word);
     }
   }
@@ -318,8 +381,11 @@ function stepDemo() {
 
 function stepIt() {
   if (k < points.length) {
+    document.getElementById("animateReber").setAttribute('disabled', 'true');
+
     drawIt(k);
   } else {
+    document.getElementById("animateReber").removeAttribute("disabled");
     k = -1;
   }
   k++;
@@ -330,15 +396,23 @@ function redFunction(word) {
   let element = document.getElementById("yourText");
   element.value = word.toUpperCase() + " is not a Reber word!";
   element.style.color = "red";
-  disableButtons();
+
+  this.is_reber = false;
+  enableButtons();
+  const row = reberTable.rows[reberTable.rows.length - 1];
+  row.style.color = "red";
   disableReberTest();
   createFalseTable(word);
   old_word = word;
 }
 
 function greenFunction(word) {
+  points.push(point_10);
   document.getElementById("yourText").value = word.toUpperCase();
   document.getElementById("yourText").style.color = "green";
+  this.color = "green";
+  this.is_reber = true;
+
   enableButtons();
   disableReberTest();
   createTable(word);
@@ -358,3 +432,4 @@ let input = document.getElementById('myText');
 input.addEventListener('keypress', enableReberTest, true);
 input.addEventListener('input', enableReberTest, true);
 
+input.addEventListener('input', disableButtons, true);
