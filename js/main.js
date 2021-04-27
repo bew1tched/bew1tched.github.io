@@ -34,8 +34,10 @@ let falseTable = document.getElementById("myFalseTablerow");
 let reberTable = document.getElementById("reberTable");
 
 
-let rebers = ['bpvve', 'BTSSXXTVVE', 'BTXXVPSE', 'BPVPXVPXVPXVVE', 'BTSXXVPSE', 'btsxse', 'btsxxtvve']
-let non_rebers = ['BTSSPXSE', 'BPTVVB', 'BTXXVVSE', 'BPVSPSE', 'BTSSSE', 'SBTPPE', 'BVVSE', 'BTSXPE']
+let rebers = ['bpvve', 'BTSSXXTVVE', 'BTXXVPSE', 'BPVPXVPXVPXVVE', 'BTSXXVPSE', 'btsxse', 'btsxxtvve', 'bptttvve',
+              'BTXXVPXTTTTTTTTVPXTVPXTVPXVVE', 'BTSSSXSE', 'BTSSXSE', 'BPVPXTVVE', 'BTSXXVPXVVE', 'BTXXTVPXVPSE']
+let non_rebers = ['BTSSPXSE', 'BPTVVB', 'BTXXVVSE', 'BPVSPSE', 'BTSSSE', 'SBTPPE', 'BVVSE', 'BTSXPE', 'BTTXSE',
+                  'BPTTVB', 'BSSPSE', 'BPBTPBTE', 'BPTSE', 'BXXBV', 'BXVSE', 'BSSSV', 'BTTXBTE', 'BPXSVPXVPSE']
 
 let slider = document.getElementById("myRange");
 let speed = 5;
@@ -270,6 +272,7 @@ function testReber() {
     } else {
       createReberTable(5, c, null);
       redFunction(word);
+      return;
     }
     if ((c === 'v') || (c === 'p')) {
       if (c === 'p') {
