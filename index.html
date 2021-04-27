@@ -7,6 +7,7 @@
   * {
     padding: 0;
     margin: 0;
+    box-sizing: border-box;
   }
 
   canvas {
@@ -67,15 +68,21 @@
     width: 33%;
     padding: 0;
   }
-    .tablecolumn {
+
+  .tablecolumn {
     float: left;
-    width: 50%;
+    width: 250px;
     padding: 0;
   }
 
   .row {
     width: 100%;
     margin-bottom: 10px;
+  }
+
+  tbody > tr > td {
+    width: 250px;
+    word-wrap: anywhere !important;
   }
 
   /* Clear floats after the columns */
@@ -97,14 +104,15 @@
     color: black;
     text-align: center;
   }
-.grid-container {
-  display: grid;
-  grid-template-columns: 300px 500px 400px;
-  grid-template-rows: auto;
-  gap: 10px 10px;
-  grid-template-areas:
+
+  .grid-container {
+    display: grid;
+    grid-template-columns: 300px 500px 500px;
+    grid-template-rows: auto;
+    gap: 10px 20px;
+    grid-template-areas:
     ". . .";
-}
+  }
 
 </style>
 <body>
@@ -118,23 +126,23 @@
 </div>
 <div class="container">
 
-<div class="grid-container">
-      <div class="row">
+  <div class="grid-container">
+    <div class="row">
 
-    <table class="table" id="reberTable">
-      <thead>
-      <tr>
-        <th scope="col">Q</th>
-        <th scope="col">&#8721;</th>
-        <th scope="col">Q</th>
-      </tr>
-      </thead>
-      <tbody id="reberRow">
+      <table class="table" id="reberTable">
+        <thead>
+        <tr>
+          <th scope="col">Q</th>
+          <th scope="col">&#8721;</th>
+          <th scope="col">Q</th>
+        </tr>
+        </thead>
+        <tbody id="reberRow">
 
-      </tbody>
+        </tbody>
 
-    </table>
-      </div>
+      </table>
+    </div>
 
     <div class="card-body">
       <div class="row">
@@ -191,43 +199,43 @@
         <table class="table" id="myTable">
           <thead>
           <tr>
-            <th scope="col">Reber Word</th>
+            <th>Reber Word</th>
           </tr>
           </thead>
           <tbody id="myTablerow">
           <tr>
-
+            <td></td>
           </tr>
           </tbody>
         </table>
       </div>
 
 
-      <div class="column">
+      <div class="tablecolumn">
 
         <table class="table" id="myFalseTable">
           <thead>
           <tr>
-            <th scope="col">Non-Reber Word</th>
+            <th>Non-Reber Word</th>
           </tr>
           </thead>
           <tbody id="myFalseTablerow">
           <tr>
+            <td></td>
 
           </tr>
           </tbody>
         </table>
       </div>
     </div>
-</div>
-</div>
-  <script src="js/main.js"></script>
-
-  <div class="footer">
-    <p></p>
   </div>
 </div>
+<script src="js/main.js"></script>
+
+<div class="footer">
+  <p></p>
 </div>
+
 
 </body>
 </html>
