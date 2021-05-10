@@ -357,12 +357,15 @@ async function demo() {
 function enableButtons() {
   document.getElementById("animateReber").removeAttribute("disabled");
   document.getElementById("stepReber").removeAttribute("disabled");
-
+  document.getElementById("getReber").removeAttribute("disabled");
+  document.getElementById("getNonReber").removeAttribute("disabled");
 }
 
 function disableButtons() {
   document.getElementById("stepReber").setAttribute('disabled', 'true');
   document.getElementById("animateReber").setAttribute('disabled', 'true');
+  document.getElementById("getReber").setAttribute('disabled', 'true');
+  document.getElementById("getNonReber").setAttribute('disabled', 'true');
 }
 
 function enableReberTest() {
@@ -390,9 +393,13 @@ function stepDemo() {
 function stepIt() {
   if (k < points.length) {
     document.getElementById("animateReber").setAttribute('disabled', 'true');
+    document.getElementById("getReber").setAttribute('disabled', 'true');
+    document.getElementById("getNonReber").setAttribute('disabled', 'true');
     drawIt(k);
   } else {
     document.getElementById("animateReber").removeAttribute("disabled");
+    document.getElementById("getReber").removeAttribute("disabled");
+    document.getElementById("getNonReber").removeAttribute("disabled");
     k = -1;
   }
   k++;
