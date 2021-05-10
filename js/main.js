@@ -6,22 +6,24 @@ let x;
 let y;
 let dx;
 let dy;
+let bx;
+let by;
 
-point_0 = {'x': 16, 'y': 160, 'dx': 16, 'dy': 160};
-point_1 = {'x': 32, 'y': 161, 'dx': 96, 'dy': 161};
-point_2 = {'x': 110, 'y': 150, 'dx': 184, 'dy': 72};
-point_4 = {'x': 200, 'y': 71, 'dx': 296, 'dy': 71};
-point_5 = {'x': 309, 'y': 84, 'dx': 383, 'dy': 161};
-point_6 = {'x': 398, 'y': 161, 'dx': 463, 'dy': 160};
-point_7 = {'x': 110, 'y': 175, 'dx': 184, 'dy': 251};
-point_8 = {'x': 198, 'y': 251, 'dx': 296, 'dy': 251};
-point_9 = {'x': 311, 'y': 239, 'dx': 383, 'dy': 161};
-point_10 = {'x': 463, 'y': 161, 'dx': 463, 'dy': 160};
+point_0 = {'x': 16, 'y': 160, 'dx': 16, 'dy': 160, 'bx': 16, 'by': 160};
+point_1 = {'x': 32, 'y': 161, 'dx': 80, 'dy': 161, 'bx': 96, 'by': 161};
+point_2 = {'x': 110, 'y': 150, 'dx': 168, 'dy': 88, 'bx': 184, 'by': 72};
+point_4 = {'x': 200, 'y': 71, 'dx': 280, 'dy': 71, 'bx': 296, 'by': 71};
+point_5 = {'x': 309, 'y': 84, 'dx': 370, 'dy': 145, 'bx': 383, 'by': 161};
+point_6 = {'x': 398, 'y': 161, 'dx': 447, 'dy': 160, 'bx': 463, 'by': 160};
+point_7 = {'x': 110, 'y': 175, 'dx': 168, 'dy': 235, 'bx': 184, 'by': 251};
+point_8 = {'x': 198, 'y': 251, 'dx': 280, 'dy': 251, 'bx': 296, 'by': 251};
+point_9 = {'x': 311, 'y': 239, 'dx': 370, 'dy': 177, 'bx': 383, 'by': 161};
+point_10 = {'x': 463, 'y': 161, 'dx': 463, 'dy': 160, 'bx': 463, 'by': 160};
 
-point_S = {'x': 184, 'y': 72, 'dx': 184, 'dy': 72};
-point_T = {'x': 184, 'y': 252, 'dx': 184, 'dy': 252};
-point_P = {'x': 296, 'y': 236, 'dx': 296, 'dy': 71};
-point_X = {'x': 288, 'y': 87, 'dx': 184, 'dy': 252};
+point_S = {'x': 184, 'y': 72, 'dx': 184, 'dy': 72, 'bx': 184, 'by': 72};
+point_T = {'x': 184, 'y': 252, 'dx': 184, 'dy': 252, 'bx': 184, 'by': 252};
+point_P = {'x': 296, 'y': 236, 'dx': 296, 'dy': 87, 'bx': 296, 'by': 71};
+point_X = {'x': 288, 'y': 87, 'dx': 200, 'dy': 236, 'bx': 184, 'by': 252};
 
 color = "green";
 
@@ -35,9 +37,9 @@ let reberTable = document.getElementById("reberTable");
 
 
 let rebers = ['bpvve', 'BTSSXXTVVE', 'BTXXVPSE', 'BPVPXVPXVPXVVE', 'BTSXXVPSE', 'btsxse', 'btsxxtvve', 'bptttvve',
-              'BTXXVPXTTTTTTTTVPXTVPXTVPXVVE', 'BTSSSXSE', 'BTSSXSE', 'BPVPXTVVE', 'BTSXXVPXVVE', 'BTXXTVPXVPSE']
+  'BTXXVPXTTTTTTTTVPXTVPXTVPXVVE', 'BTSSSXSE', 'BTSSXSE', 'BPVPXTVVE', 'BTSXXVPXVVE', 'BTXXTVPXVPSE']
 let non_rebers = ['BTSSPXSE', 'BPTVVB', 'BTXXVVSE', 'BPVSPSE', 'BTSSSE', 'SBTPPE', 'BVVSE', 'BTSXPE', 'BTTXSE',
-                  'BPTTVB', 'BSSPSE', 'BPBTPBTE', 'BPTSE', 'BXXBV', 'BXVSE', 'BSSSV', 'BTTXBTE', 'BPXSVPXVPSE']
+  'BPTTVB', 'BSSPSE', 'BPBTPBTE', 'BPTSE', 'BXXBV', 'BXVSE', 'BSSSV', 'BTTXBTE', 'BPXSVPXVPSE']
 
 let slider = document.getElementById("myRange");
 let speed = 5;
@@ -52,7 +54,7 @@ slider.oninput = function () {
 
 function drawHalfCircleS() {
   ctx.beginPath();
-  ctx.arc(x - 1, y - 33, 19, 0.9, Math.PI * 0.85, true);
+  ctx.arc(bx - 1, by - 33, 19, 0.9, Math.PI * 0.85, true);
   ctx.lineWidth = 5;
   ctx.strokeStyle = "lightgreen";
   ctx.stroke();
@@ -60,7 +62,7 @@ function drawHalfCircleS() {
 
 function drawHalfCircleT() {
   ctx.beginPath();
-  ctx.arc(x - 6, y + 36, 19, 0, Math.PI * 1.5, false);
+  ctx.arc(bx - 6, by + 36, 19, 0, Math.PI * 1.5, false);
   ctx.lineWidth = 5;
   ctx.strokeStyle = "lightgreen";
   ctx.stroke();
@@ -68,9 +70,10 @@ function drawHalfCircleT() {
 
 function drawBall(color) {
   ctx.beginPath();
-  ctx.arc(dx, dy, 16, 0, Math.PI * 2);
-  ctx.fillStyle = color;
-  ctx.fill();
+  ctx.arc(bx, by, 16, 0, Math.PI * 2);
+  ctx.lineWidth = 5;
+  ctx.strokeStyle = color;
+  ctx.stroke();
   ctx.closePath();
 }
 
@@ -90,6 +93,9 @@ async function drawIt(j) {
   y = points[j]['y']
   dx = points[j]['dx']
   dy = points[j]['dy']
+
+  bx = points[j]['bx']
+  by = points[j]['by']
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   await sleep(100);
   if (!this.is_reber) {
@@ -98,10 +104,10 @@ async function drawIt(j) {
     }
   }
 
-  if ((x === 184) && (dx === x) && (y === 72) && (dy === y)) {
+  if ((bx === 184) && (bx === x) && (by === 72) && (by === y)) {
     drawHalfCircleS();
   }
-  if ((x === 184) && (dx === x) && (y === 252) && (dy === y)) {
+  if ((bx === 184) && (bx === x) && (by === 252) && (by === y)) {
     drawHalfCircleT();
   }
   drawLine();
@@ -173,7 +179,6 @@ function testReber() {
       c = word[i];
       points.push(point_1);
       createReberTable(1, 'B', 2);
-
     } else {
       createReberTable(1, c, null);
       redFunction(word);
@@ -385,7 +390,6 @@ function stepDemo() {
 function stepIt() {
   if (k < points.length) {
     document.getElementById("animateReber").setAttribute('disabled', 'true');
-
     drawIt(k);
   } else {
     document.getElementById("animateReber").removeAttribute("disabled");
@@ -400,7 +404,7 @@ function redFunction(word) {
   element.value = word.toUpperCase() + " is not a Reber word!";
   element.style.color = "red";
   let extra_point = points[points.length - 1];
-  points.push({'x': extra_point.dx, 'y': extra_point.dy, 'dx': extra_point.dx, 'dy': extra_point.dy});
+  points.push({'bx': extra_point.bx, 'by': extra_point.by});
   this.is_reber = false;
   enableButtons();
   const row = reberTable.rows[reberTable.rows.length - 1];
@@ -412,6 +416,7 @@ function redFunction(word) {
 
 function greenFunction(word) {
   points.push(point_10);
+
   document.getElementById("yourText").value = word.toUpperCase();
   document.getElementById("yourText").style.color = "green";
   this.color = "green";
