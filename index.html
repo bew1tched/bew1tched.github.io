@@ -1,241 +1,116 @@
 <!DOCTYPE html>
-<html>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+<html lang="de">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-<style>
-  * {
-    padding: 0;
-    margin: 0;
-    box-sizing: border-box;
-  }
+<link rel="stylesheet" href="main.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
-  canvas {
-    background-image: url("reber.svg");
-    display: block;
-    margin: auto;
-    width: 489px;
-    height: 312px;
-  }
-
-  .border {
-    border: darkgrey 1px solid;
-  }
-
-  .container {
-    margin: 10px auto 10px auto;
-  }
-
-  .container:after {
-    content: "";
-    display: table;
-    clear: both;
-  }
-
-  /* Style buttons */
-  .btn {
-    background-color: white; /* Blue background */
-    border: darkgray solid 1px; /* Remove borders */
-    color: black; /* White text */
-    padding-top: 10px; /* Some padding */
-    font-size: 16px; /* Set a font size */
-    cursor: pointer; /* Mouse pointer on hover */
-  }
-
-  .btn:disabled {
-    background-color: white; /* Blue background */
-    border: darkgray solid 1px; /* Remove borders */
-    color: lightgrey; /* White text */
-    padding-top: 10px; /* Some padding */
-    font-size: 16px; /* Set a font size */
-    cursor: pointer; /* Mouse pointer on hover */
-  }
-
-  /* Darker background on mouse-over */
-  .btn:hover {
-    background-color: whitesmoke;
-  }
-
-  .header {
-    font-size: xx-large;
-    margin: 10px 5px;
-    display: block;
-    text-align: center;
-  }
-
-  .column {
-    float: left;
-    width: 33%;
-    padding: 0;
-  }
-
-  .tablecolumn {
-    float: left;
-    width: 250px;
-    padding: 0;
-  }
-
-  .row {
-    width: 100%;
-    margin-bottom: 10px;
-  }
-
-  tbody > tr > td {
-    width: 250px;
-    word-wrap: anywhere !important;
-  }
-
-  /* Clear floats after the columns */
-  .row:after {
-    content: "";
-    display: table;
-    clear: both;
-  }
-
-  .slider:hover {
-    opacity: 1;
-  }
-
-  .footer {
-    position: fixed;
-    left: 0;
-    bottom: 0;
-    width: 100%;
-    color: black;
-    text-align: center;
-  }
-
-  .grid-container {
-    display: grid;
-    grid-template-columns: 300px 500px 500px;
-    grid-template-rows: auto;
-    gap: 10px 20px;
-    grid-template-areas:
-    ". . .";
-  }
-
-</style>
+<head>
+    <title>ESA 2 : Grammatik</title>
+</head>
 <body>
-
+<h1 style="text-align: center">ESA 2: Grammatik</h1>
+<br>
 <div class="container">
-  <div class="row">
-    <div class="header">
-      <p>Reber Grammar</p>
+    <div class="parent">
+        <div class="div1">
+
+        </div>
+        <div class="div2">
+            <table class="table" id="validationTable">
+                <thead>
+                <tr>
+                    <th scope="col">count '('</th>
+                    <th scope="col">count ')'</th>
+                    <th scope="col">validation</th>
+                </tr>
+                </thead>
+                <tbody id="validationRow">
+
+                </tbody>
+            </table>
+        </div>
+        <div class="div3"></div>
+        <div class="div4">
+            <table class="table" id="stateTable">
+                <thead>
+                <tr>
+                    <th scope="col">No.</th>
+                    <th scope="col">Regel</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr id="row1" class="table-light">
+                    <td>1</td>
+                    <td>S &#8594; SOS | A | Z</td>
+                </tr>
+                <tr id="row2" class="table-light">
+                    <td>2</td>
+                    <td>Z &#8594; 0...9</td>
+                </tr>
+                <tr id="row3" class="table-light">
+                    <td>3</td>
+                    <td>O &#8594; + | - | * | /</td>
+                </tr>
+                <tr id="row4" class="table-light">
+                    <td>4</td>
+                    <td>A &#8594; (S)</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="div5">
+            <div id="output"></div>
+        </div>
+        <div class="div6">
+            <p>G = {V, &sum; , R , S} mit:</p>
+            <ul style="list-style: none">
+                <li>V = {S,A,O,Z}</li>
+                <li>&sum; = { + , - , + , / }</li>
+                <li>R = { see table }</li>
+                <li>S = {A}</li>
+            </ul>
+            <p>A = Ausdruck <br>
+                O = Operator (+ | - | * | /) <br>
+                Z = Zahl (0...9)</p>
+
+        </div>
+        <div class="div7"></div>
+        <div class="div8">
+            <div class="row">
+                <div class="column">
+                    <button type="button" class="btn btn-info" onclick="genValid()" id="genValid">Generate Valid
+                        Expression
+                    </button>
+                </div>
+                <div class="column">
+                    <label for="myRange" class="form-label">Set Animation Speed</label>
+                    <input type="range" class="form-range" min="1" max="10" id="myRange">
+                </div>
+            </div>
+            <div class="row">
+                <div class="column">
+                    <button type="button" class="btn btn-info" onclick="genStepwise()" id="genStepwise">
+                        Generate Stepwise
+                    </button>
+                </div>
+                <div class="column">
+                    <button type="button" class="btn btn-success" onclick="nextStep()" id="next"
+                            style="visibility: hidden">Next
+                    </button>
+                </div>
+            </div>
+            <div class="row">
+                <button type="button" class="btn btn-warning" onclick="genInvalid()" id="genInvalid">Generate Invalid
+                    Expression
+                </button>
+            </div>
+        </div>
+        <div class="div9">
+            <a href="./documentation.html">Documentation</a>
+        </div>
     </div>
-  </div>
 </div>
-<div class="container">
-
-  <div class="grid-container">
-    <div class="row">
-
-      <table class="table" id="reberTable">
-        <thead>
-        <tr>
-          <th scope="col">Q</th>
-          <th scope="col">&#8721;</th>
-          <th scope="col">Q</th>
-        </tr>
-        </thead>
-        <tbody id="reberRow">
-
-        </tbody>
-
-      </table>
-    </div>
-
-    <div class="card-body">
-      <div class="row">
-        <div class="border">
-          <canvas id="myCanvas" width="480" height="320"></canvas>
-        </div>
-      </div>
-
-      <form onsubmit="return false">
-        <div class="row">
-          <input class="form-control" type="text" id="myText" placeholder="Type a word..." required>
-        </div>
-
-        <div class="row">
-          <input class="form-control" type="text" id="yourText" value="" disabled>
-        </div>
-
-        <div class="row">
-          <div class="column">
-            <button class="btn" id="testReber" data-toggle="tooltip" data-placement="left" disabled
-                    title="Test the word">
-              <span class="material-icons">check</span></button>
-            <button class="btn" id="animateReber" data-toggle="tooltip" data-placement="left" disabled
-                    title="Animate the word">
-              <span class="material-icons">play_arrow</span></button>
-            <button class="btn" id="stepReber" data-toggle="tooltip" data-placement="left" disabled
-                    title="Animate the word stepwise"><span class="material-icons">skip_next</span>
-            </button>
-          </div>
-
-          <div class="column">
-            <label>
-              Set animation speed
-            </label>
-            <input type="range" min="1" max="10" value="5" class="slider" id="myRange">
-          </div>
-        </div>
-
-      </form>
-
-      <div class="row">
-        <button class="btn" id="getReber" onclick="getReber()" data-toggle="tooltip" data-placement="left"
-                title="Create a Reber Word">Create Reber Word
-        </button>
-        <button class="btn" id="getNonReber" onclick="getFalseReber()" data-toggle="tooltip" data-placement="left"
-                title="Create a Non-Reber word">Create Non-Reber Word
-        </button>
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="tablecolumn">
-
-        <table class="table" id="myTable">
-          <thead>
-          <tr>
-            <th>Reber Word</th>
-          </tr>
-          </thead>
-          <tbody id="myTablerow">
-          <tr>
-            <td></td>
-          </tr>
-          </tbody>
-        </table>
-      </div>
-
-
-      <div class="tablecolumn">
-
-        <table class="table" id="myFalseTable">
-          <thead>
-          <tr>
-            <th>Non-Reber Word</th>
-          </tr>
-          </thead>
-          <tbody id="myFalseTablerow">
-          <tr>
-            <td></td>
-
-          </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </div>
-</div>
-<script src="js/main.js"></script>
-
-<div class="footer">
-  <p></p>
-</div>
-
-
+<script src="./js/main.js"></script>
 </body>
 </html>
