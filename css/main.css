@@ -78,3 +78,10 @@
                 right: 3px;
 
     }
+
+    .docs {
+        width: 850px;
+        margin: auto;
+        font-family: "Calibri Light", serif;
+        font-size: large;
+    }
