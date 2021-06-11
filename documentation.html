@@ -1,6 +1,6 @@
 <html lang="en">
 <head>
-    <title>ESA 2 : Grammatik</title>
+    <title>ESA 3: Kellerautomat</title>
 </head>
 <link rel="stylesheet" href="./css/main.css">
 
@@ -8,13 +8,7 @@
 <div class="docs">
     <h1>Dokumentation</h1>
     <h2>Aufgabenstellung</h2>
-    <p>Erzeugen Sie mit Hilfe eine Grammatik zuf&auml;llige arithmetische Ausdr&uuml;cke &uuml;ber einstelligen nat&uuml;rlichen Zahlen mit
-        den
-        Operanden "+,-,*,/" und beliebig geschachtelten runden Klammeren, z.B.: 2*(3*(4+7)-9) oder 9+2 oder (3) oder nur
-        7
-        sind g&uuml;ltig, ung&uuml;ltig sind 12 oder () oder (+3) oder -1. <br>
-        Nutzen Sie die folgenden Abk&uuml;rzungen: A = Ausdruck, O =
-        Operator = + | - | * | / , Z = Zahl/Ziffer = 0 | 1| 2| ... | 9.</p>
+    <p>Kellerautomat bla</p>
 
     <h2>Technische Umsetzung</h2>
     <p>Das Layout wurde grunds&auml;tzlich mit HTML5 und CSS3 erstellt.<br>
@@ -23,23 +17,7 @@
         S&auml;mtliche Funktionalit&auml;t wurde mit JavaScript implementiert.</p>
 
     <h2>Fachliche Umsetzung</h2>
-    <p>Bei 'Klick' auf den Button "Generate Valid Expression" wird ein zuf&auml;lliger valider Ausdruck erstellt.<br>
-        Jeder Ausdruck beginnt immer mit S als Startwert. Aus S kann: SOS (ein Startwert mit Operator und noch ein Startwert), eine Zahl Z oder ein Ausdruck A folgen.<br>
-        Es wird nun mit Hilfe von Math.random() ein zuf&auml;lliger m&ouml;glicher Nachfolger gew&auml;hlt. <br>
-        Gleiches gilt f&uuml;r O, wo ein zuf&auml;lliger Operator oder Z, wo eine Zuf&auml;llige Zahl ausgew&auml;hlt wird. <br>
-        Kommt es zur Auswahl A, dann wird der Ausdruck in Klammern geschrieben: (S). <br>
-        Dies geschieht solange bis kein A, S oder Z mehr in dem so konstruierten String vorkommt.<br>
-    <p>Der Button "Generate Stepwise" funktioniert grunds&auml;tzlich nach dem selben Prinzip, nur muss manuel auf "Next"
-        geklickt werden, bis ein terminaler Wert erreicht wurde.<br>
-        Auch hier ist der String terminal, wenn kein A, S oder Z mehr vorkommt.</p>
-
-    <p>Der Button "Generate Invalid Expression" generiert wie bei "Generate Valid Expression" ersteinmal einen validen
-        Ausdruck und l&ouml;scht dann einen Random Wert wieder aus dem String.<br>
-        Die Validierungsfunktion z&auml;hlt nun erst alle Klammern um zu pr&uuml;fen ob die Anzahl &uuml;bereinstimmt. Au&szlig;erdem werden
-        alle
-        Zahen einzeln in ein Array geschrieben und es wird gepr&uuml;ft, ob es Werte gr&ouml;&szlig;er 9 gibt. <br>
-        Zus&auml;tzlich wird notiert welches Zeichen an welcher Stelle entfernt wurde um sp&auml;ter anzeigen zu k&ouml;nnen, warum der
-        Ausdruck falsch ist.
+    <p>Der Automat kellert...
     </p>
 </div>
 </body>

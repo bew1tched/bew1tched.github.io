@@ -5,11 +5,12 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
+
 <head>
-    <title>ESA 2 : Grammatik</title>
+    <title>ESA 3: Kellerautomat</title>
 </head>
 <body>
-<h1 style="text-align: center">ESA 2: Grammatik</h1>
+<h1 style="text-align: center">ESA 3: Kellerautomat</h1>
 <br>
 <div class="container">
     <div class="parent">
@@ -17,97 +18,299 @@
 
         </div>
         <div class="div2">
-            <table class="table" id="validationTable">
-                <thead>
-                <tr>
-                    <th scope="col">Anzahl '('</th>
-                    <th scope="col">Anzahl ')'</th>
-                    <th scope="col">Validierung</th>
-                </tr>
-                </thead>
-                <tbody id="validationRow">
-
-                </tbody>
-            </table>
+            <div id="output"></div>
         </div>
         <div class="div3"></div>
         <div class="div4">
-            <table class="table" id="stateTable">
+            <table class="table" >
                 <thead>
                 <tr>
-                    <th scope="col">No.</th>
-                    <th scope="col">Regel</th>
+                    <th>
+                        Kellerzustand
+                    </th>
                 </tr>
                 </thead>
-                <tbody>
-                <tr id="row1" class="table-light">
-                    <td>1</td>
-                    <td>S &#8594; SOS | A | Z</td>
-                </tr>
-                <tr id="row2" class="table-light">
-                    <td>2</td>
-                    <td>Z &#8594; 0...9</td>
-                </tr>
-                <tr id="row3" class="table-light">
-                    <td>3</td>
-                    <td>O &#8594; + | - | * | /</td>
-                </tr>
-                <tr id="row4" class="table-light">
-                    <td>4</td>
-                    <td>A &#8594; (S)</td>
-                </tr>
+                <tbody id="cellarTable">
+                    <tr>
+                        <td></td>
+                    </tr>
                 </tbody>
             </table>
         </div>
         <div class="div5">
-            <div id="output"></div>
+            <svg id="Ebene_1" data-name="Ebene 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 841.89 595.28">
+                <defs>
+                    <style>
+                        .cls-1 {
+                            fill: #fff;
+                        }
+
+                        .cls-1, .cls-3, .cls-4 {
+                            stroke: #1d1d1b;
+                            stroke-miterlimit: 10;
+                        }
+
+                        .cls-2 {
+                            font-size: 24px;
+                            font-family: MyriadPro-Regular,
+                            Myriad Pro, serif;
+                        }
+
+                        .cls-2, .cls-4 {
+                            fill: #1d1d1b;
+                        }
+
+                        .cls-3 {
+                            fill: none;
+                            stroke-width: 2px;
+                        }
+
+                        .cls-5 {
+                            letter-spacing: -0.02em;
+                        }
+
+                        .cls-6 {
+                            letter-spacing: 0em;
+                        }
+
+                        .cls-7 {
+                            letter-spacing: -0.03em;
+                        }
+
+                        .cls-8 {
+                            letter-spacing: -0.02em;
+                        }
+                    </style>
+                </defs>
+                <circle id="node1" class="cls-1" cx="81.93" cy="297.64" r="39.22"/>
+                <text class="cls-2" transform="translate(67.53 302.39)">q1</text>
+                <circle id="node2" class="cls-1" cx="414.61" cy="148.06" r="39.22"/>
+                <circle class="cls-1" cx="414.61" cy="148.06" r="34.02"/>
+                <text class="cls-2" transform="translate(403.08 152.68)">q2</text>
+                <circle id="node4" class="cls-1" cx="764.28" cy="297.64" r="39.22"/>
+                <text class="cls-2" transform="translate(750.41 301.89)">q4</text>
+                <g id="p_q3_q2">
+                    <path class="cls-3" d="M436.34,182.07a299.06,299.06,0,0,1,0,237.41"/>
+                    <line class="cls-4" x1="436.38" y1="179.51" x2="432.99" y2="207.28"/>
+                    <line class="cls-4" x1="453.18" y1="201.85" x2="436.31" y2="179.53"/>
+                </g>
+                <text class="cls-2" transform="translate(463.82 307.14)">Z,&epsilon;-&gt;&epsilon;</text>
+
+                <g id="p_q2_q3">
+                    <path class="cls-3" d="M392.88,419.48a298.95,298.95,0,0,1,0-237.41"/>
+                    <line class="cls-4" x1="393.6" y1="419.09" x2="392.61" y2="391.13"/>
+                    <line class="cls-4" x1="373.52" y1="399.65" x2="393.67" y2="419.06"/>
+                </g>
+                <text class="cls-2" transform="translate(307.81 305.87)">),
+                    <tspan class="cls-5" x="11.78" y="0">X</tspan>
+                    <tspan class="cls-6" x="24.98" y="0">-&gt;&epsilon;</tspan>
+                </text>
+
+                <g id="p_q1_q3">
+                    <line class="cls-3" x1="117.37" y1="313.94" x2="375.33" y2="447.51"/>
+                    <line class="cls-4" x1="375.99" y1="447.01" x2="356.16" y2="427.27"/>
+                    <line class="cls-4" x1="348.04" y1="446.54" x2="376.02" y2="446.94"/>
+                </g>
+                <text class="cls-2" transform="matrix(0.89, 0.46, -0.46, 0.89, 188.85, 373.47)">(,&epsilon;-&gt;X</text>
+
+                <g id="p_q1_q2">
+                    <line class="cls-3" x1="115.55" y1="276.03" x2="379.17" y2="161.92"/>
+                    <line class="cls-4" x1="379.1" y1="161.63" x2="351.21" y2="163.91"/>
+                    <line class="cls-4" x1="360.61" y1="182.59" x2="379.07" y2="161.56"/>
+                </g>
+                <text class="cls-2" transform="translate(211.83 229.11) rotate(-23.41)">Z,&epsilon;-&gt;&epsilon;</text>
+
+                <g id="p_q2_q4">
+                    <path class="cls-3"
+                          d="M724.72,298.83a487.07,487.07,0,0,1-146.07-41.94,487.27,487.27,0,0,1-130-88.7"/>
+                    <line class="cls-4" x1="725.29" y1="299.2" x2="701.82" y2="283.96"/>
+                    <line class="cls-4" x1="697.84" y1="304.49" x2="725.3" y2="299.12"/>
+                </g>
+                <text class="cls-2" transform="matrix(0.89, 0.46, -0.46, 0.89, 548.98, 236.76)">
+                    <tspan class="cls-7">O</tspan>
+                    <tspan x="15.72" y="0">,&epsilon;-&gt;&epsilon;</tspan>
+                </text>
+                <!--
+                                <path class="cls-3" d="M724.72,298.83a487.07,487.07,0,0,1-146.07-41.94,487.27,487.27,0,0,1-130-88.7"/>
+                                <line class="cls-4" x1="725.29" y1="299.2" x2="701.82" y2="283.96"/>
+                                <line class="cls-4" x1="697.84" y1="304.49" x2="725.3" y2="299.12"/>-->
+                <g id="p_q4_q2">
+                    <path class="cls-3" d="M454.09,152.45A478.24,478.24,0,0,1,731.88,272.57"/>
+                    <line class="cls-4" x1="453.22" y1="151.43" x2="475.11" y2="168.85"/>
+                    <line class="cls-4" x1="481.05" y1="148.81" x2="453.2" y2="151.5"/>
+                </g>
+                <text class="cls-2" transform="matrix(0.89, 0.46, -0.46, 0.89, 589.45, 176.54)">Z,&epsilon;-&gt;&epsilon;</text>
+
+                <g id="p_q3_q4">
+                    <path class="cls-3" d="M453.15,441.08A507.71,507.71,0,0,1,725.74,305.87"/>
+                    <line class="cls-4" x1="726.68" y1="305.7" x2="698.72" y2="304.58"/>
+                    <line class="cls-4" x1="705.78" y1="324.27" x2="726.65" y2="305.63"/>
+                </g>
+                <text class="cls-2" transform="translate(556.41 391.13) rotate(-31.06)">
+                    <tspan class="cls-7">O</tspan>
+                    <tspan x="15.72" y="0">,</tspan>
+                    <tspan class="cls-8" x="20.69" y="0">X</tspan>
+                    <tspan x="33.89" y="0">-&gt;&epsilon;</tspan>
+                </text>
+
+                <g id="p_q4_q3">
+                    <path class="cls-3"
+                          d="M731.36,318.4a523.21,523.21,0,0,1-115.64,83.17,524.28,524.28,0,0,1-161.12,54"/>
+                    <line class="cls-4" x1="452.7" y1="456.2" x2="480.4" y2="460.12"/>
+                    <line class="cls-4" x1="475.35" y1="439.83" x2="452.71" y2="456.28"/>
+                </g>
+                <text class="cls-2" transform="translate(589.45 441.08) rotate(-31.06)">(,&epsilon;-&gt;X</text>
+
+                <g id="p_q3_q3_0">
+                    <path class="cls-1"
+                          d="M375.3,459.77c-22.61,1.62-40.93,18.05-43.5,37.56-2.39,18.12,8.74,39.54,30.44,42.19s39.3-16.86,44.4-32.11a37.92,37.92,0,0,0,1.87-14.19"/>
+                    <line class="cls-4" x1="409.2" y1="492.82" x2="393.16" y2="515.74"/>
+                    <line class="cls-4" x1="413.54" y1="520.43" x2="409.13" y2="492.8"/>
+                </g>
+                <text class="cls-2" transform="matrix(0.89, 0.46, -0.46, 0.89, 312.32, 536.26)">(,&epsilon;-&gt;X</text>
+
+                <g id="p_q3_q3_1">
+                    <path class="cls-1"
+                          d="M453.38,462.84c21.45-1.07,40.16,13,44.29,32,3.84,17.66-4.78,40.17-25,45.36s-38-13.93-44.66-26.54A48.87,48.87,0,0,1,422.48,494"/>
+                    <line class="cls-4" x1="421.72" y1="492.32" x2="420.36" y2="520.27"/>
+                    <line class="cls-4" x1="440.1" y1="513.38" x2="421.65" y2="492.35"/>
+                </g>
+                <text class="cls-2" transform="matrix(0.9, -0.43, 0.43, 0.9, 460.91, 565.65)">),
+                    <tspan class="cls-5" x="11.78" y="0">X</tspan>
+                    <tspan class="cls-6" x="24.98" y="0">-&gt;&epsilon;</tspan>
+                </text>
+
+                <circle id="node3" class="cls-1" cx="414.61" cy="453.56" r="39.22"
+                        transform="translate(-199.28 426.02) rotate(-45)"/>
+                <circle class="cls-1" cx="414.61" cy="453.56" r="34.02"/>
+                <text class="cls-2" transform="translate(403.99 463.97)">q3</text>
+            </svg>
         </div>
         <div class="div6">
-            <p>G = {V, &sum; , R , S} mit:</p>
-            <ul style="list-style: none">
-                <li>V = {S,A,O,Z}</li>
-                <li>&sum; = { + , - , * , /, 1...9 }</li>
-                <li>R = { laut Tabelle }</li>
-                <li>S = {A}</li>
-            </ul>
-            <p>A = Ausdruck <br>
-                O = Operator (+ | - | * | /) <br>
-                Z = Zahl (0...9)</p>
-
+            <table class="table" id="cellar">
+                <thead>
+                <tr>
+                    <th>Q</th>
+                    <th>&sum;<sub>&epsilon;</sub></th>
+                    <th>&rho;<sub>&epsilon;</sub></th>
+                    <th>P(Q &cross; &rho;<sub>&epsilon;</sub>)</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr id="r_q1_q2_0">
+                    <td>q1</td>
+                    <td>Z</td>
+                    <td>&epsilon;</td>
+                    <td>{(q2, &epsilon;)}</td>
+                </tr>
+                <tr id="r_q1_q3_0">
+                    <td>q1</td>
+                    <td>(</td>
+                    <td>&epsilon;</td>
+                    <td>{(q3, X)}</td>
+                </tr>
+                <tr id="r_q2_q3_0">
+                    <td>q2</td>
+                    <td>)</td>
+                    <td>X</td>
+                    <td>{(q3, &epsilon;)}</td>
+                </tr>
+                <tr id="r_q2_q4_0">
+                    <td>q2</td>
+                    <td>O</td>
+                    <td>&epsilon;</td>
+                    <td>{(q4, &epsilon;)}</td>
+                </tr>
+                <tr id="r_q3_q2_0">
+                    <td>q3</td>
+                    <td>Z</td>
+                    <td>&epsilon;</td>
+                    <td>{(q2, &epsilon;)}</td>
+                </tr>
+                <tr id="r_q3_q3_0">
+                    <td>q3</td>
+                    <td>(</td>
+                    <td>&epsilon;</td>
+                    <td>{(q3, X)}</td>
+                </tr>
+                <tr id="r_q3_q3_1">
+                    <td>q3</td>
+                    <td>)</td>
+                    <td>X</td>
+                    <td>{(q3, &epsilon;)}</td>
+                </tr>
+                <tr id="r_q3_q4_0">
+                    <td>q3</td>
+                    <td>O</td>
+                    <td>X</td>
+                    <td>{(q4, &epsilon;)}</td>
+                </tr>
+                <tr id="r_q4_q2_0">
+                    <td>q4</td>
+                    <td>Z</td>
+                    <td>&epsilon;</td>
+                    <td>{(q2, &epsilon;)}</td>
+                </tr>
+                <tr id="r_q4_q3_0">
+                    <td>q4</td>
+                    <td>(</td>
+                    <td>&epsilon;</td>
+                    <td>{(q3, X)}</td>
+                </tr>
+                </tbody>
+            </table>
+            <div id="hidden" style="visibility: hidden"></div>
         </div>
         <div class="div7"></div>
         <div class="div8">
             <div class="row">
-                <div class="column">
-                    <button type="button" class="btn btn-info" onclick="genValid()" id="genValid">Generate Valid
-                        Expression
-                    </button>
+                <div class="inputDiv">
+                    <input style="width: 500px;" id="input" type="text" class="form-control"
+                           placeholder="Ausdruck eingeben oder erzeugen"
+                           aria-label="Ausdruck">
                 </div>
-                <div class="column">
-                    <label for="myRange" class="form-label">Set Animation Speed</label>
-                    <input type="range" class="form-range" min="1" max="10" id="myRange">
+                <div class="inputDiv">
+                    <button style="width: 100px" id="testBtn" class="btn btn-success" type="button"
+                            onclick="checkWord()">Test
+                    </button>
                 </div>
             </div>
+
             <div class="row">
                 <div class="column">
-                    <button type="button" class="btn btn-info" onclick="genStepwise()" id="genStepwise">
-                        Generate Stepwise
+                    <button type="button" class="btn btn-info" onclick="getValid()" id="genValid">Korrekten Ausdruck
+                        erzeugen
                     </button>
                 </div>
                 <div class="column">
+                    <button type="button" class="btn btn-warning" onclick="getInvalid()" id="genInvalid">Falschen
+                        Ausdruck erzeugen
+                    </button>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="column">
+                    <button type="button" class="btn btn-info" onclick="demo()" id="demoBtn">
+                        Ausdruck automatisch animieren
+                    </button>
+                </div>
+                <div class="column">
+                    <div id="slider">
+                        <label for="myRange" class="form-label">Animationsgeschwindigkeit</label>
+                        <input type="range" class="form-range" min="1" max="10" id="myRange" value="5">
+                    </div>
+                </div>
+                <div class="row">
                     <button type="button" class="btn btn-success" onclick="nextStep()" id="next"
                             style="visibility: hidden">Next
                     </button>
                 </div>
             </div>
-            <div class="row">
-                <button type="button" class="btn btn-warning" onclick="genInvalid()" id="genInvalid">Generate Invalid
-                    Expression
-                </button>
-            </div>
+
         </div>
         <div class="div9">
-            <a href="./documentation.html">Documentation</a>
+            <a href="./documentation.html">Dokumentation</a>
         </div>
     </div>
 </div>

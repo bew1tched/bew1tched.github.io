@@ -1,87 +1,110 @@
 
-    .container {
-        margin-left: auto;
-        margin-right: auto;
-    }
+.container {
+    margin-left: auto;
+    margin-right: auto;
+}
 
-    .parent {
-        display: grid;
-        grid-template-columns:300px 500px 300px;
-        grid-template-rows: 50px 500px 140px;
-        grid-column-gap: 25px;
-        grid-row-gap: 25px;
-        justify-content: center;
-    }
+.parent {
+    display: grid;
+    grid-template-columns:150px 600px 300px;
+    grid-template-rows: 50px 500px 140px;
+    grid-column-gap: 25px;
+    grid-row-gap: 25px;
+    justify-content: center;
+}
 
-    .div1 {
-        grid-area: 1 / 1 / 2 / 2;
-    }
+.div1 {
+    grid-area: 1 / 1 / 2 / 2;
+}
 
-    .div2 {
-        grid-area: 1 / 2 / 2 / 3;
-    }
+.div2 {
+    grid-area: 1 / 2 / 2 / 3;
+}
 
-    .div3 {
-        grid-area: 1 / 3 / 2 / 4;
-    }
+.div3 {
+    grid-area: 1 / 3 / 2 / 4;
+}
 
-    .div4 {
-        grid-area: 2 / 1 / 3 / 2;
-    }
+.div4 {
+    grid-area: 2 / 1 / 3 / 2;
+}
 
-    .div5 {
-        grid-area: 2 / 2 / 3 / 3;
-        border: lightgrey 1px solid;
-    }
+.div5 {
+    grid-area: 2 / 2 / 3 / 3;
+    border: lightgrey 1px solid;
+}
 
-    .div6 {
-        grid-area: 2 / 3 / 3 / 4;
-    }
+.div6 {
+    grid-area: 2 / 3 / 3 / 4;
+}
 
-    .div7 {
-        grid-area: 3 / 1 / 4 / 2;
-    }
+.div7 {
+    grid-area: 3 / 1 / 4 / 2;
+}
 
-    .div8 {
-        grid-area: 3 / 2 / 4 / 3;
-        margin-left: 13px;
-    }
+.div8 {
+    grid-area: 3 / 2 / 4 / 3;
+    margin-left: 13px;
+}
 
-    .div9 {
-        grid-area: 3 / 3 / 4 / 4;
-        position: relative;
-    }
+.div9 {
+    grid-area: 3 / 3 / 4 / 4;
+    position: relative;
+}
 
-    #output {
-        padding: 10px;
-    }
+#output {
+    font-size: large;
+    padding: 10px;
+}
 
-    .row {
-        height: 42px;
-        width: 500px;
-        margin-bottom: 10px;
-    }
+.row {
+    height: 42px;
+    width: 600px;
+    margin-bottom: 10px;
+}
 
-    .column {
-        float: left;
-        width: 250px;
-        padding: 0;
-    }
+.column {
+    float: left;
+    width: 300px;
+    padding: 0;
+}
 
-    .btn {
-        width: 200px;
-    }
+.inputDiv {
+    float: left;
+    margin-bottom: 10px;
+}
 
-    a {
-        position: absolute;
-        bottom: 0;
-                right: 3px;
+.inputDiv > input {
+    height: 41px;
+}
 
-    }
+.btn {
+    width: 290px;
+    height: 41px;
+}
+#slider, #genInvalid {
+    width: 290px;
+    float: right;
+}
 
-    .docs {
-        width: 850px;
-        margin: auto;
-        font-family: "Calibri Light", serif;
-        font-size: large;
-    }
+a {
+    position: absolute;
+    bottom: 0;
+    right: 3px;
+
+}
+
+.green > circle,
+.green > line,
+.green > path,
+.green > marker > path {
+    stroke: green !important;
+    stroke-width: 4px;
+}
+
+.docs {
+    width: 850px;
+    margin: auto;
+    font-family: "Calibri Light", serif;
+    font-size: large;
+}
