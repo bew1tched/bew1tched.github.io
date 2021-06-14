@@ -7,7 +7,7 @@
 .parent {
     display: grid;
     grid-template-columns:150px 600px 300px;
-    grid-template-rows: 50px 500px 140px;
+    grid-template-rows: 20px 500px 200px;
     grid-column-gap: 25px;
     grid-row-gap: 25px;
     justify-content: center;
@@ -57,6 +57,14 @@
     padding: 10px;
 }
 
+.columnBtn {
+    float: left;
+    width: 300px;
+    padding-left: 10px;
+}
+#next {
+    float: right;
+}
 .row {
     height: 42px;
     width: 600px;
@@ -82,8 +90,11 @@
     width: 290px;
     height: 41px;
 }
-#slider, #genInvalid {
-    width: 290px;
+#slider {
+    width: 600px;
+    float: right;
+}
+#genInvalid {
     float: right;
 }
 

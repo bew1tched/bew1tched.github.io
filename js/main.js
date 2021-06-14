@@ -2,8 +2,6 @@ const initialState = 'S';
 let table = document.getElementById("cellar");
 let cellarTable = document.getElementById("cellarTable");
 
-let btnNext = document.getElementById("next");
-btnNext.style.visibility = 'hidden';
 let outputDiv = document.getElementById('output');
 let numbers = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
 let operators = ['+', '-', '*', '/']
@@ -12,6 +10,8 @@ let validierung;
 
 let deletedChar;
 let cutChar;
+
+
 const states = {
     S: {
         followers: ['SOS', 'A', 'Z'],
@@ -105,11 +105,14 @@ function isTerminal(value) {
     return !value.includes('Z');
 }
 
+let added = 0;
+
 async function demo() {
     output();
     clearTable();
-    let added = 0;
+    inDemo();
     cellarTable.style.color = "black"
+
     for (let i = 0; i < demoArray.length; i++) {
         if (demoArray[i]['cellar'] === 'add') {
             addCellarValue();
@@ -131,6 +134,7 @@ async function demo() {
         document.getElementById(demoArray[i]['row']).style.backgroundColor = 'white';
         await sleep(time / speed);
     }
+
     if (!validierung) {
         document.getElementById(demoArray[demoArray.length - 1]['node']).style.stroke = "red";
         document.getElementById(demoArray[demoArray.length - 1]['node']).style.strokeWidth = "4px";
@@ -146,68 +150,64 @@ async function demo() {
     if (added !== 0) {
         cellarTable.style.color = "red";
     }
+
+    afterDemo();
 }
 
-async function genStepwise() {
-    deletedChar = '';
-    clearTable();
-    currentState = initialState;
-    document.getElementById("row2").style.removeProperty('color');
-    document.getElementById("row3").style.removeProperty('color');
-    document.getElementById("row4").style.removeProperty('color');
-
-    document.getElementById("row1").style.color = 'red';
-}
+let steps = 0;
 
 function nextStep() {
-    clearTable();
+    console.log(demoArray)
 
-    if (!isTerminal(currentState)) {
-
-        if ((currentState.indexOf('S') > -1) || (currentState.indexOf('SOS') > -1)) {
-            document.getElementById("row2").style.removeProperty('color');
-            document.getElementById("row3").style.removeProperty('color');
-            document.getElementById("row4").style.removeProperty('color');
-
-            document.getElementById("row1").style.color = 'red';
-            currentState = currentState.replaceAll('S', () => {
-                return states.S.followers[Math.floor(Math.random() * states.S.followers.length)];
-            });
+    inSteps();
+    output();
+    cellarTable.style.color = "black"
+    if (steps < demoArray.length) {
+        if (demoArray[steps]['cellar'] === 'add') {
+            addCellarValue();
+            added += 1;
         }
-        if (currentState.indexOf('Z') > -1) {
-            document.getElementById("row1").style.removeProperty('color');
-            document.getElementById("row3").style.removeProperty('color');
-            document.getElementById("row4").style.removeProperty('color');
-
-            document.getElementById("row2").style.color = 'red';
-            currentState = currentState.replaceAll('Z', () => {
-                return states.Z.followers[Math.floor(Math.random() * states.Z.followers.length)];
-            });
+        if (demoArray[steps]['cellar'] === 'delete') {
+            delCellarValue();
+            added -= 1;
         }
-        if (currentState.indexOf('O') > -1) {
-            document.getElementById("row1").style.removeProperty('color');
-            document.getElementById("row2").style.removeProperty('color');
-            document.getElementById("row4").style.removeProperty('color');
-
-            document.getElementById("row3").style.color = 'red';
-            currentState = currentState.replaceAll('O', () => {
-                return states.O.followers[Math.floor(Math.random() * states.O.followers.length)];
-            });
+        if (steps !== 0) {
+            document.getElementById(demoArray[steps - 1]['node']).style.stroke = "black";
+            document.getElementById(demoArray[steps - 1]['node']).style.strokeWidth = "2px";
+            document.getElementById(demoArray[steps - 1]['path']).classList.remove('green');
+            document.getElementById(demoArray[steps - 1]['row']).style.backgroundColor = 'white';
         }
-        if (currentState.indexOf('A') > -1) {
-            document.getElementById("row1").style.removeProperty('color');
-            document.getElementById("row2").style.removeProperty('color');
-            document.getElementById("row3").style.removeProperty('color');
-            document.getElementById("row4").style.color = 'red';
-            currentState = currentState.replaceAll('A', () => {
-                return states.A.followers[Math.floor(Math.random() * states.A.followers.length)];
-            });
+
+        document.getElementById(demoArray[steps]['node']).style.stroke = "green";
+        document.getElementById(demoArray[steps]['node']).style.strokeWidth = "4px";
+        document.getElementById(demoArray[steps]['path']).classList.add('green');
+        document.getElementById(demoArray[steps]['row']).style.backgroundColor = 'lightgreen';
+
+
+    }
+    if (!validierung && steps === demoArray.length - 1) {
+        document.getElementById(demoArray[demoArray.length - 1]['node']).style.stroke = "red";
+        document.getElementById(demoArray[demoArray.length - 1]['node']).style.strokeWidth = "4px";
+        document.getElementById(demoArray[demoArray.length - 1]['path']).classList.add('red');
+        document.getElementById(demoArray[demoArray.length - 1]['row']).style.backgroundColor = 'red';
+        if (added !== 0) {
+            cellarTable.style.color = "red";
         }
     }
-    if (isTerminal(currentState)) {
-        validate(currentState);
-        btnNext.style.visibility = 'hidden';
+    if (added !== 0 && steps === demoArray.length - 1) {
+        cellarTable.style.color = "red";
     }
+    steps++;
+    if (steps === demoArray.length + 1) {
+        afterSteps();
+        steps = 0;
+
+        document.getElementById(demoArray[demoArray.length - 1]['node']).style.stroke = "black";
+        document.getElementById(demoArray[demoArray.length - 1]['node']).style.strokeWidth = "2px";
+        document.getElementById(demoArray[demoArray.length - 1]['path']).classList.remove('green');
+        document.getElementById(demoArray[demoArray.length - 1]['row']).style.backgroundColor = 'white';
+    }
+
 }
 
 function genInvalid() {
@@ -318,7 +318,7 @@ function validate(word) {
             }
             last_char = current_char;
             if (isClosed(last_char) && !cellar.pop()) {
-                demoArray.push({'row': 'hidden', 'node': 'hidden', 'path': 'hidden', 'cellar': 'empty'})
+                //demoArray.push({'row': 'hidden', 'node': 'hidden', 'path': 'hidden', 'cellar': 'empty'})
                 is_valid = false;
             }
             continue;
@@ -340,6 +340,13 @@ function validate(word) {
         }
         is_valid = false;
     }
+    demoArray.push({
+        'row': 'hidden',
+        'node': demoArray[demoArray.length - 1]['node'],
+        'path': 'hidden',
+        'cellar': 'false'
+    }) // Endzustand
+
     return is_valid && cellar.length === 0;
 }
 
@@ -349,27 +356,51 @@ function enableButtons() {
     clearTable();
     document.getElementById("demoBtn").removeAttribute("disabled");
     document.getElementById("testBtn").removeAttribute("disabled");
+    document.getElementById("next").removeAttribute("disabled");
     slider.removeAttribute('disabled');
 }
 
 function disableButtons() {
     document.getElementById("demoBtn").setAttribute('disabled', 'true');
     document.getElementById("testBtn").setAttribute('disabled', 'true');
+    document.getElementById("next").setAttribute('disabled', 'true');
     slider.setAttribute('disabled', 'true');
 }
 
-function doNotDisableNext() {
-    btnNext.style.visibility = 'visible';
-    slider.setAttribute('disabled', 'true');
+function inDemo() {
+    document.getElementById("demoBtn").setAttribute('disabled', 'true');
+    document.getElementById("testBtn").setAttribute('disabled', 'true');
     document.getElementById("genValid").setAttribute('disabled', 'true');
     document.getElementById("genInvalid").setAttribute('disabled', 'true');
-    document.getElementById("genStepwise").setAttribute('disabled', 'true');
+    document.getElementById("next").setAttribute('disabled', 'true');
+}
+
+function afterDemo() {
+    document.getElementById("demoBtn").removeAttribute("disabled");
+    document.getElementById("testBtn").removeAttribute("disabled");
+    document.getElementById("genValid").removeAttribute("disabled");
+    document.getElementById("genInvalid").removeAttribute("disabled");
+    document.getElementById("next").removeAttribute("disabled");
+    added = 0;
+}
+
+function inSteps() {
+    document.getElementById("demoBtn").setAttribute('disabled', 'true');
+    document.getElementById("testBtn").setAttribute('disabled', 'true');
+    document.getElementById("genValid").setAttribute('disabled', 'true');
+    document.getElementById("genInvalid").setAttribute('disabled', 'true');
+    slider.setAttribute('disabled', 'true');
+}
+
+function afterSteps() {
+    clearTable();
+    document.getElementById("demoBtn").removeAttribute("disabled");
+    document.getElementById("testBtn").removeAttribute("disabled");
+    document.getElementById("genValid").removeAttribute("disabled");
+    document.getElementById("genInvalid").removeAttribute("disabled");
+    slider.removeAttribute('disabled');
+    added = 0;
 }
 
 let eingabe = document.getElementById('input');
 eingabe.addEventListener('keypress', enableButtons, true);
-
-/*let next = document.getElementById('genStepwise');
-next.addEventListener('click', doNotDisableNext, true);
-next.addEventListener('click', genStepwise, true);*/
-
