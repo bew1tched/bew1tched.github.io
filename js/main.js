@@ -318,7 +318,6 @@ function validate(word) {
             }
             last_char = current_char;
             if (isClosed(last_char) && !cellar.pop()) {
-                //demoArray.push({'row': 'hidden', 'node': 'hidden', 'path': 'hidden', 'cellar': 'empty'})
                 is_valid = false;
             }
             continue;
