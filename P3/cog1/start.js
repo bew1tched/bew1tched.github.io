@@ -18,9 +18,9 @@ require(["dojo", "dojo/parser", "dojo/domReady!"], function(dojo) {
 		debug : true,
 		cacheBust : new Date(),
 		waitSeconds : 5,
-		paths : {
-			"cog1" : "/cog1"
-		},
+        paths: {
+            cog1: ${window.location.href.replace("index.html", "")}/cog1,
+        },
 		// Add one entry for each custom module.
 		// This is, among others, necessary to apply the path parameter.
 		aliases : [
