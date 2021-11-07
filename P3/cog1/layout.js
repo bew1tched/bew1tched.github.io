@@ -41,7 +41,7 @@ function(exports, ui, dojo, parser, on, dom, domConstruct, domStyle, BorderConta
         headerPane = new ContentPane({
             region : "top",
             "class" : "edgePanel",
-            content : "COG1 Rendering Pipeline"
+            content : "BLA"
         });
         appLayout.addChild(headerPane);
 
@@ -123,7 +123,7 @@ function(exports, ui, dojo, parser, on, dom, domConstruct, domStyle, BorderConta
         var canvas = domConstruct.create("canvas", {
             id : "canvas",
             // use dynamic canvas size from center container.
-            //Úwidth : canvasWidth,//800,
+            //ï¿½width : canvasWidth,//800,
             //height : canvasHeight,//500
             className : "canvas"
         }, canvasPane.domNode, "first");
