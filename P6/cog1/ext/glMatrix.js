@@ -95,7 +95,7 @@ vec3.set = function(vec, dest) {
  * dest if specified, vec otherwise
  */
 vec3.add = function(vec, vec2, dest) {
-	if(!dest || vec == dest) {
+	if(!dest || vec === dest) {
 		vec[0] += vec2[0];
 		vec[1] += vec2[1];
 		vec[2] += vec2[2];
@@ -121,7 +121,7 @@ vec3.add = function(vec, vec2, dest) {
  * dest if specified, vec otherwise
  */
 vec3.subtract = function(vec, vec2, dest) {
-	if(!dest || vec == dest) {
+	if(!dest || vec === dest) {
 		vec[0] -= vec2[0];
 		vec[1] -= vec2[1];
 		vec[2] -= vec2[2];
@@ -994,6 +994,20 @@ mat4.translate = function(mat, vec, dest) {
 	return dest;
 };
 
+mat4.shear = function(shear, vec) {
+	const x = vec[0], y = vec[1], z = vec[2];
+
+	shear[1] = x;
+    shear[2] = x;
+    shear[4] = y;
+    shear[6] = y;
+    shear[8] = z;
+    shear[9] = z;
+
+    return shear;
+};
+
+
 /*
  * mat4.scale
  * Scales a matrix by the given vector
@@ -1009,7 +1023,7 @@ mat4.translate = function(mat, vec, dest) {
 mat4.scale = function(mat, vec, dest) {
 	var x = vec[0], y = vec[1], z = vec[2];
 	
-	if(!dest || mat == dest) {
+	if(!dest || mat === dest) {
 		mat[0] *= x;
 		mat[1] *= x;
 		mat[2] *= x;
@@ -1132,7 +1146,7 @@ mat4.rotateX = function(mat, angle, dest) {
 
 	if(!dest) { 
 		dest = mat; 
-	} else if(mat != dest) { // If the source and destination differ, copy the unchanged rows
+	} else if(mat !== dest) { // If the source and destination differ, copy the unchanged rows
 		dest[0] = mat[0];
 		dest[1] = mat[1];
 		dest[2] = mat[2];
@@ -1371,7 +1385,7 @@ mat4.lookAt = function(eye, center, up, dest) {
 		centery = center[1],
 		centerz = center[2];
 
-	if (eyex == centerx && eyey == centery && eyez == centerz) {
+	if (eyex === centerx && eyey === centery && eyez === centerz) {
 		return mat4.identity(dest);
 	}
 	

@@ -41,7 +41,7 @@ function(exports, ui, dojo, parser, on, dom, domConstruct, domStyle, BorderConta
         headerPane = new ContentPane({
             region : "top",
             "class" : "edgePanel",
-            content : "Scanline"
+            content : "Shearing"
         });
         appLayout.addChild(headerPane);
 

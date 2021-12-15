@@ -6,7 +6,7 @@
  * @namespace cog1
  * @module node
  */
-define(["exports", "shader"], function(exports, shader) {
+define(["exports", "shader"], function (exports, shader) {
     "use strict";
 
     /**
@@ -16,11 +16,11 @@ define(["exports", "shader"], function(exports, shader) {
      */
     function create(_name, _model, _parent, _isLightNode, _visible) {
         //console.log("cog1.node.create:" + _model);
-        if(!_name || !_model) {
+        if (!_name || !_model) {
             console.log("Error node.create no name or model");
             return;
         }
-        if(_visible == undefined) {
+        if (_visible == undefined) {
             _visible = true;
         }
         var newNodeObj = {
@@ -28,88 +28,88 @@ define(["exports", "shader"], function(exports, shader) {
             // Fields for each object instance.
             //
             // The UI finds nodes by name.
-            name : _name,
+            name: _name,
             // 3D-Model, if null the node may only serve as an empty group.
-            model : _model,
+            model: _model,
             // Parent node, should not be undefined but null if not set.
-            parent : _parent || null,
+            parent: _parent || null,
             // List of children /child nodes.
-            children : [],
+            children: [],
             // Only visible nodes are rendered.
-            visible : _visible,
+            visible: _visible,
             // ran the animations of the node if it has assigned animations.
-            animated : false,
+            animated: false,
             // This is the node that visualizes the light source.
             // Indicates to move the light when node is translated.
-            isLightNode : _isLightNode,
+            isLightNode: _isLightNode,
 
             // Local transformations (translation, rotation, scale)
             // for the model or group.
-            transformation : {
-                translate : [0, 0, 0],
-                rotate : [0, 0, 0], // around x,y,z axis angle in radiant.
-                scale : [1, 1, 1],
-                shear : [0, 0, 0],
+            transformation: {
+                translate: [0, 0, 0],
+                rotate: [0, 0, 0], // around x,y,z axis angle in radiant.
+                scale: [1, 1, 1],
+                shear: [0, 0, 0],
             },
             // Modelview matrix as 4x4 glMatrix to
             // Transform, i.e. translate, rotate, scale the node.
             // Local Modelview not including the transformations of the parents.
-            localModelview : mat4.identity(mat4.create()),
+            localModelview: mat4.identity(mat4.create()),
             // World coordinates, including transformation of parents.
-            worldModelview : mat4.identity(mat4.create()),
+            worldModelview: mat4.identity(mat4.create()),
             // Track changes via transformations and update only when necessary.
-            localModelviewUpToDate : false,
-            worldModelviewUpToDate : false,
+            localModelviewUpToDate: false,
+            worldModelviewUpToDate: false,
             // Separate rotation-matrix for normals.
             // Because normals should only subject of rotation not translation.
             // Alternative: calculate the inverse of the model-view matrix.
-            localRotation : mat4.identity(mat4.create()),
-            worldRotation : mat4.identity(mat4.create()),
+            localRotation: mat4.identity(mat4.create()),
+            worldRotation: mat4.identity(mat4.create()),
             // Local shearing matrix.
-            localShear : mat4.identity(mat4.create()),
+            localShear: mat4.identity(mat4.create()),
 
             //
             // Public functions.
             //
-            addChild : addChild,
+            addChild: addChild,
             // Getter (some only for debug).
-            getLocalModelview : getLocalModelview,
-            getWorldModelview : getWorldModelview,
-            getModel : getModel,
-            getModelData : getModelData,
-            getParent : getParent,
-            isReady : isReady,
-            isVisible : isVisible,
-            isAnimated : isAnimated,
-            getTexture : getTexture,
+            getLocalModelview: getLocalModelview,
+            getWorldModelview: getWorldModelview,
+            getModel: getModel,
+            getModelData: getModelData,
+            getParent: getParent,
+            isReady: isReady,
+            isVisible: isVisible,
+            isAnimated: isAnimated,
+            getTexture: getTexture,
             // Setter.
-            setVisible : setVisible,
-            setAnimated : setAnimated,
-            setParent : setParent,
+            setVisible: setVisible,
+            setAnimated: setAnimated,
+            setParent: setParent,
             // Transforms and matrix operations.
-            rotate : rotate,
-            rotateTo : rotateTo,
-            scale : scale,
-            scaleTo : scaleTo,
-            shear : shear,
-            shearTo : shearTo,
-            translate : translate,
-            transform : transform,
-            applyMatrixToVertices : applyMatrixToVertices,
-            applyMatrixToTransformedVertices : applyMatrixToTransformedVertices,
-            projectTransformedVertices : projectTransformedVertices,
-            applyMatrixToNormals : applyMatrixToNormals,
+            rotate: rotate,
+            rotateTo: rotateTo,
+            scale: scale,
+            scaleTo: scaleTo,
+            shear: shear,
+            shearTo: shearTo,
+            translate: translate,
+            transform: transform,
+            applyMatrixToVertices: applyMatrixToVertices,
+            applyMatrixToTransformedVertices: applyMatrixToTransformedVertices,
+            projectTransformedVertices: projectTransformedVertices,
+            applyMatrixToNormals: applyMatrixToNormals,
             // Update
-            setWorldModelviewNotUpToDate : setWorldModelviewNotUpToDate,
-            updateModelview : updateModelview,
-            updateRotation : updateRotation,
-            tellChildren : tellChildren,
+            setWorldModelviewNotUpToDate: setWorldModelviewNotUpToDate,
+            updateModelview: updateModelview,
+            updateRotation: updateRotation,
+            tellChildren: tellChildren,
             // Operations on data/mesh.
-            toggleTriangulation : toggleTriangulation,
-            cleanData : cleanData,
+            toggleTriangulation: toggleTriangulation,
+            cleanData: cleanData,
         };
         // Register as child;
-        if(_parent) {
+        if (_parent) {
             _parent.addChild(newNodeObj);
         }
         // Return access object to the node.
@@ -131,7 +131,7 @@ define(["exports", "shader"], function(exports, shader) {
     }
 
     function getModelData() {
-        if(this.model === null) {
+        if (this.model === null) {
             return null;
         }
         return this.model.getData();
@@ -144,7 +144,7 @@ define(["exports", "shader"], function(exports, shader) {
     function setParent(_parent) {
         this.parent = _parent;
         // Register as child;
-        if(_parent) {
+        if (_parent) {
             _parent.addChild(this);
         }
 
@@ -165,9 +165,10 @@ define(["exports", "shader"], function(exports, shader) {
     function tellChildren(fktName) {
         // First tell myself.
         this[fktName]();
-        for(var i = 0; i < this.children.length; i++) {
+        for (var i = 0; i < this.children.length; i++) {
             this.children[i]["tellChildren"](fktName);
-        };
+        }
+        ;
     }
 
     /**
@@ -176,7 +177,7 @@ define(["exports", "shader"], function(exports, shader) {
      */
     function isReady() {
         var ready = false;
-        if(this.model !== null) {
+        if (this.model !== null) {
             ready = this.model.isReady();
         } else {
             // The model may not have finished loading.
@@ -193,7 +194,7 @@ define(["exports", "shader"], function(exports, shader) {
      * Set a node visible (default if val is undefined) or invisible.
      */
     function setVisible(val) {
-        if(val == undefined) {
+        if (val === undefined) {
             val = true;
         }
         this.visible = val;
@@ -207,14 +208,14 @@ define(["exports", "shader"], function(exports, shader) {
      * Set a node animated (default if val is undefined).
      */
     function setAnimated(val) {
-        if(val == undefined) {
+        if (val === undefined) {
             val = true;
         }
         this.animated = val;
     }
 
     function getTexture() {
-        if(this.model !== null) {
+        if (this.model !== null) {
             return this.model.getTexture();
         } else {
             return null;
@@ -237,7 +238,7 @@ define(["exports", "shader"], function(exports, shader) {
      */
     function updateModelview() {
         // update LocalModelview() {
-        if(!this.localModelviewUpToDate) {
+        if (!this.localModelviewUpToDate) {
 
             // Calculate local modelview.
             mat4.identity(this.localModelview);
@@ -257,11 +258,12 @@ define(["exports", "shader"], function(exports, shader) {
 
             // Include scaling.
             mat4.scale(this.localModelview, this.transformation.scale);
-            mat4.shear(this.localShear, this.transformation.shear);
 
             // BEGIN exercise Shear
             // Include shearing.
             // Modify the matrix this.localShear (see mat4.translate for matrix data structure).
+            mat4.shear(this.localShear, this.transformation.shear);
+
             mat4.multiply(this.localModelview, this.localShear);
             // END exercise Shear
 
@@ -270,11 +272,11 @@ define(["exports", "shader"], function(exports, shader) {
             this.worldModelviewUpToDate = false;
         }
         // Update WorldModelview and worldRotation.
-        if(!this.worldModelviewUpToDate) {
+        if (!this.worldModelviewUpToDate) {
             mat4.identity(this.worldModelview);
             mat4.identity(this.worldRotation);
             // Include transformation of parent node.
-            if(this.parent !== null) {
+            if (this.parent !== null) {
                 var PWMV = this.parent.updateModelview();
                 var PWR = this.parent.updateRotation();
                 mat4.multiply(this.worldModelview, PWMV, this.worldModelview);
@@ -361,7 +363,7 @@ define(["exports", "shader"], function(exports, shader) {
         //console.log("transform name: " + name);
         this.localModelviewUpToDate = false;
         this.worldModelviewUpToDate = false;
-        if(setTo == true) {
+        if (setTo == true) {
             vec3.set(vec, trans);
         } else {
             vec3.add(trans, vec, null);
@@ -371,7 +373,7 @@ define(["exports", "shader"], function(exports, shader) {
 
         // Keep the light attached (also move it) if this node if it is the light node
         // and was translated.
-        if(clampLight) {
+        if (clampLight) {
             shader.setLights(undefined, undefined, trans);
         }
         // Scene-update should be done in UI or by animation.
@@ -384,7 +386,7 @@ define(["exports", "shader"], function(exports, shader) {
      */
     function applyMatrixToVertices(matrix) {
         // Transform the model.
-        if(this.model !== null) {
+        if (this.model !== null) {
             this.model.applyMatrixToVertices(matrix);
         }
     }
@@ -395,7 +397,7 @@ define(["exports", "shader"], function(exports, shader) {
      */
     function applyMatrixToTransformedVertices(matrix) {
         // Transform the model.
-        if(this.model !== null) {
+        if (this.model !== null) {
             this.model.applyMatrixToTransformedVertices(matrix);
         }
     }
@@ -405,7 +407,7 @@ define(["exports", "shader"], function(exports, shader) {
      */
     function projectTransformedVertices(matrix) {
         // Transform the model.
-        if(this.model !== null) {
+        if (this.model !== null) {
             this.model.projectTransformedVertices(matrix);
         }
     }
@@ -415,19 +417,19 @@ define(["exports", "shader"], function(exports, shader) {
      * @parameter mat mat4 matrix
      */
     function applyMatrixToNormals(matrix) {
-        if(this.model !== null) {
+        if (this.model !== null) {
             this.model.applyMatrixToNormals(matrix);
         }
     }
 
     function toggleTriangulation() {
-        if(this.model !== null) {
+        if (this.model !== null) {
             this.model.toggleTriangulation();
         }
     }
 
     function cleanData() {
-        if(this.model !== null) {
+        if (this.model !== null) {
             this.model.cleanData();
         }
     }
