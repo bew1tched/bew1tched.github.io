@@ -11,7 +11,7 @@ define(["exports", "dojo", "dojo/dom-style", "app", "scenegraph", "createScene",
         // Variables with initialization parameters.
         //
         // Fill or stroke polygon.
-        var fill = false;
+        var fill = true;
         // Display normals for debug.
         var displayNormals = false;
         var defaultNormalLength = 50;
