@@ -1,69 +1,68 @@
-
 /**
  * 3D Data Store for a model.
- * 
- * This is an empty data template 
+ *
+ * This is an empty data template
  * that explains the format.
  * See cube.js as an example.
- * 
+ *
  * Model may also have a procedural calculation.
  * In this case a model must contain the function calculate(parameter),
  * where parameter is an array of parameter.
  * It is called with the parameters given in the call in
  * createScene. See cube.js and sphere.js as an example.
- * 
- * 
+ *
+ *
  * Data defines some default colors.
- * 
+ *
  * Data requires a reference to itself to mix its own properties
  * into the model data.
- * 
+ *
  *  *  Coordinate System:
  *        y
  *        |
  *        |____
  *       /     x
  *     z/
- * 
+ *
  * @namespace cog1
  * @module data
  */
-define(["exports", "data", "glMatrix"], function(data, exports) {
-    "use strict";
+define(["exports", "data", "glMatrix"], function (data, exports) {
+	"use strict";
 
 	// Array with data for one model.
 	//
 	// Vertices with x,y,z. Coordinate system as in OpenGL.
 	var vertices = [];
-	
+
 	// Color array  with default colors "red", "green".
 	// The color array contains objects of the form:
-	// {colorname : [r,g,b,a]}, the name can be accessed 
+	// {colorname : [r,g,b,a]}, the name can be accessed
 	// via the Object.keys() function.
 	// But this is not necessary as the color object get
 	// augmented with the fields name and rgba during initialization.
 	var colors = [
-		{red : [255, 0, 0, 255]},
-		{green : [0, 255, 0, 255]},
-		{blue : [0, 0, 255, 255]},
+		{red: [255, 0, 0, 255]},
+		{green: [0, 255, 0, 255]},
+		{blue: [0, 0, 255, 255]},
 		//
-		{cyan : [0, 255, 255, 255]},
-		{magenta : [255, 0, 255, 255]},
-		{yellow : [255, 255,0, 255]},
+		{cyan: [0, 255, 255, 255]},
+		{magenta: [255, 0, 255, 255]},
+		{yellow: [255, 255, 0, 255]},
 		//
-		{black : [0, 0, 0, 255]},
-		{grey : [128, 128, 128, 255]},
-		{gold : [83, 75, 44, 255]},
-		{bluegrey : [64, 64, 128, 255]},
-		{white : [255, 255, 255, 255]},
+		{black: [0, 0, 0, 255]},
+		{grey: [128, 128, 128, 255]},
+		{gold: [83, 75, 44, 255]},
+		{bluegrey: [64, 64, 128, 255]},
+		{white: [255, 255, 255, 255]},
 	];
 
 	// 2D-array of texture coordinates. Indices used by polygonTextureCoord.
 	// Origin is at the left bottom of the texture image (as for openGL).
-	// Used as default the corners of a rectangular texture 
+	// Used as default the corners of a rectangular texture
 	// in mathematical positive direction (starting bottom-left):
-	var textureCoord = [ [0,0],[0,1],[1,1],[1,0] ];
-	
+	var textureCoord = [[0, 0], [0, 1], [1, 1], [1, 0]];
+
 	// Vertices can be combined to polygons
 	// referencing the indices of the arrays above.
 
@@ -76,7 +75,7 @@ define(["exports", "data", "glMatrix"], function(data, exports) {
 
 	// Color for each polygon as index in color array.
 	// There can be only one color per polygon (not one for each vertex).
-	var polygonColors = [];	
+	var polygonColors = [];
 
 	// One normal for each vertex (with the same index).
 	// One vertex may occur in several polygons, but it cannot
@@ -89,17 +88,17 @@ define(["exports", "data", "glMatrix"], function(data, exports) {
 	// Normals are calculated during initialization
 	// and a copy in model is kept up-to-date while transforming.
 	var polygonNormals = [];
-	
+
 	// 2D-array of texture coordinates for each vertex of a polygon.
 	// Data are the indices in the textureCoord array.
 	// Dimensions must match polygonVertices array.
-	// If not given (empty array), indices [1,2,3,..] 
+	// If not given (empty array), indices [1,2,3,..]
 	// for each polygon separately, are created as default.
 	// If there is exactly one texture coordinate per vertex
-	// and the order fits the vertices array, set the 
+	// and the order fits the vertices array, set the
 	// reference: polygonTextureCoord = polygonVertices.
 	var polygonTextureCoord = [];
-	
+
 	// URL of an texture image.
 	// There is only one texture per model.
 	var textureURL = "";
@@ -107,11 +106,11 @@ define(["exports", "data", "glMatrix"], function(data, exports) {
 	/////////////////////////////////////////////////////////////////
 	// Variable that do not refer to the model-data.
 	/////////////////////////////////////////////////////////////////
-	
-	// If the some data/model is uses several times in the 
+
+	// If the some data/model is uses several times in the
 	// scene initialization should be run only for the fist instance.
 	var initDone = false;
-	
+
 	/////////////////////////////////////////////////////////////////
 	// Functions that work on the data.
 	/////////////////////////////////////////////////////////////////
@@ -119,27 +118,27 @@ define(["exports", "data", "glMatrix"], function(data, exports) {
 	/**
 	 * Initialize the data module.
 	 */
-	function init(){
-		//console.log("data.init()");	
-	 	augmentColorObjecstWithColornameAndRgba.apply(this);
+	function init() {
+		//console.log("data.init()");
+		augmentColorObjecstWithColornameAndRgba.apply(this);
 	}
 
 	/**
 	 * Calculate normals, if not given.
 	 * This initialize function is applied to model data.
 	 */
-	 function initModelData(_cleanData){		
-	 	if(this.initDone == true){
-	 		return;
-	 	}
-	 				
+	function initModelData(_cleanData) {
+		if (this.initDone == true) {
+			return;
+		}
+
 		// Mix in mission members from data template the are missing in model data.
 		// As this is applied to the model data this is it.
-		for(var prop in data) {
-			if(data.hasOwnProperty(prop)){
+		for (var prop in data) {
+			if (data.hasOwnProperty(prop)) {
 				// Only array, for the data.
-				if( ! this.hasOwnProperty(prop)){
-					if(Array.isArray(data[prop])){
+				if (!this.hasOwnProperty(prop)) {
+					if (Array.isArray(data[prop])) {
 						// Create empty arrays for the missing props
 						// or link to the array in data if default not empty.
 						this[prop] = (data[prop].length > 0) ? data[prop] : [];
@@ -148,51 +147,51 @@ define(["exports", "data", "glMatrix"], function(data, exports) {
 						// Not of type array.
 						// Set the value to the default in data.
 						this[prop] = data[prop];
-					} 
-				} 
-			}			 
+					}
+				}
+			}
 		}
-		
+
 		// Create some default for polygonTextureCoord if not given.
-		if(this.textureURL != ""){
-			if(this.polygonTextureCoord.length == 0){
+		if (this.textureURL != "") {
+			if (this.polygonTextureCoord.length == 0) {
 				createDefaultPolygonTextureCoord.apply(this);
 			}
 		}
-		
-		if(_cleanData == true){
+
+		if (_cleanData == true) {
 			cleanData.apply(this);
 		}
-		
+
 		// Triangulate data and keep results,
 		// but if default in scene is false then it will be toggled
 		// back or original data by the model.
 		triangulate.apply(this);
-		
-		if(this.polygonNormals.length == 0) {
+
+		if (this.polygonNormals.length == 0) {
 			calcuatePolygonNormalsFromMesh.apply(this);
 		}
-		if(this.vertexNormals.length == 0) {
+		if (this.vertexNormals.length == 0) {
 			calcuateVertexNormalsFromPolygonNormals.apply(this);
 		}
-		
+
 		augmentColorObjecstWithColornameAndRgba.apply(this);
-		
-		// If the some data/model is used several times in the 
+
+		// If the some data/model is used several times in the
 		// scene initialize should be run only for the fist instance.
 		this.intiDone = true;
 	}
-	
+
 	/**
 	 * Called from init.
 	 * Indices [1,2,3,..] for each polygon separately, are created as default.
 	 */
-	function createDefaultPolygonTextureCoord(){
+	function createDefaultPolygonTextureCoord() {
 		// Loop polygons.
-		for(var p = 0; p < this.polygonVertices.length; p++) {
+		for (var p = 0; p < this.polygonVertices.length; p++) {
 			this.polygonTextureCoord[p] = [];
 			// Loop over vertices/edges in polygon.
-			for(var v = 0; v < this.polygonVertices[p].length; v++) {
+			for (var v = 0; v < this.polygonVertices[p].length; v++) {
 				// Assign texture coordinates via index.
 				// Just start with the first, then second and so forth (wrap if not enough).
 				this.polygonTextureCoord[p][v] = v % textureCoord.length;
@@ -203,30 +202,30 @@ define(["exports", "data", "glMatrix"], function(data, exports) {
 	/**
 	 * Identify duplicate vertices.
 	 * This is an n2 algorithm.
-	 * 
+	 *
 	 * Test the result on dirty teapot.
 	 */
-	function cleanData(){		
-		
+	function cleanData() {
+
 		// BEGIN exercise Clean-Data
-		
+
 		// List of index pairs to merge.
 		// Index of the list is the vertex to modify.
 
 		// Find equal vertices.
 
-					// Take the lowest index as replacement.
+		// Take the lowest index as replacement.
 
-						//console.log("Clean Vertex Data: "+v2+" -> "+v1);
+		//console.log("Clean Vertex Data: "+v2+" -> "+v1);
 
-				
+
 		// Replace indices of equal vertices,
 		// by always using the first index.
 		// Loop over polygons.
 
-			// Loop vertices of polygon.
+		// Loop vertices of polygon.
 
-				// Check for polygon vertex exist in merge list and replace.
+		// Check for polygon vertex exist in merge list and replace.
 
 
 		// Dump the cleaned data to copy it from the console into a clean model.
@@ -234,18 +233,18 @@ define(["exports", "data", "glMatrix"], function(data, exports) {
 		//console.log(JSON.stringify(this.polygonVertices));
 
 		// END exercise Clean-Data
-		
+
 		// Re-calculate the vertex normals.
 		calcuateVertexNormalsFromPolygonNormals.apply(this);
 	}
-	
+
 	/**
 	 * Augment all color objects with color-name, rgba  for speed
 	 * and with rgbaShaded, which is modified by the shader.
 	 * Called during initialization.
-	 */				
-	function augmentColorObjecstWithColornameAndRgba(){
-		for(var i = 0, len = this.colors.length; i < len; i++) {			
+	 */
+	function augmentColorObjecstWithColornameAndRgba() {
+		for (var i = 0, len = this.colors.length; i < len; i++) {
 			var color = this.colors[i];
 			// Read the colorname from the key and store it.
 			color.colorname = Object.keys(color)[0];
@@ -254,205 +253,239 @@ define(["exports", "data", "glMatrix"], function(data, exports) {
 			// Create an extra rgba variable
 			// for texturing and shading work-flow.
 			color.rgba = [];
-			color.rgbaShaded = [];			
+			color.rgbaShaded = [];
 		}
 		resetColors.call(this);
 	}
-	
+
 	/**
 	 * Reset all colors.
 	 */
-	function resetColors(){
-		for(var i = 0, len = this.colors.length; i < len; i++) {
+	function resetColors() {
+		for (var i = 0, len = this.colors.length; i < len; i++) {
 			var color = this.colors[i];
 			resetColor(color);
-		}		
+		}
 	}
-	
+
 	/**
 	 * Set rgbaShaded to rgba for functions that do not perform shading.
 	 * This may also be on in raster by hand, for the color in use.
-	 * 
+	 *
 	 * @parameter color: object as defined in colors.
 	 */
-	function resetColor(color){
+	function resetColor(color) {
 		// Color of polygon of after texturing.
-		vec3.set(color.rgbaOriginal, color.rgba );
+		vec3.set(color.rgbaOriginal, color.rgba);
 		// set Alpha.
-		color.rgba[3] = color.rgbaOriginal[3]; 
+		color.rgba[3] = color.rgbaOriginal[3];
 		//
 		// Color after shading.
-		vec3.set(color.rgbaOriginal, color.rgbaShaded );
+		vec3.set(color.rgbaOriginal, color.rgbaShaded);
 		// set Alpha.
-		color.rgbaShaded[3] = color.rgbaOriginal[3]; 
+		color.rgbaShaded[3] = color.rgbaOriginal[3];
 	}
-		
 
-	function getColorByName(name){
-		for(var i = 0, len = this.colors.length; i < len; i++) {			
+
+	function getColorByName(name) {
+		for (var i = 0, len = this.colors.length; i < len; i++) {
 			var color = this.colors[i];
 			// Read the colorname from the key and store it.
-			if(color.colorname == name){
+			if (color.colorname == name) {
 				return color;
 			}
 		}
-		console.log("color not found: "+name);
+		console.log("color not found: " + name);
 		return null;
 	}
 
 
 	////////////// Service functions for procedural modeling ////////////////
-	
+
 	/**
 	 * @parameter color or many colors if color==-1.
 	 */
 	function setColorForAllPolygons(color) {
 		var manyColors = color == -1 ? true : false;
 		this.polygonColors = [];
-		for (var i = 0; i < this.polygonVertices.length; ++i) {	
-			if(manyColors){
-				color = (++color % colors.length);				
-			}		
+		for (var i = 0; i < this.polygonVertices.length; ++i) {
+			if (manyColors) {
+				color = (++color % colors.length);
+			}
 			this.polygonColors.push(color);
 		}
 	}
 
-	
+
 	function applyScale(scale) {
 		for (var i = 0; i < this.vertices.length; i++) {
 			vec3.scale(this.vertices[i], scale);
 		}
 	}
-	
-	
+
+
 	/**
 	 * Search vertex in vertices array.
-	 * 
+	 *
 	 * @return index if vertex is found, false otherwise.
 	 */
-	function vertexExists(vertex, epsilon){
-	   for(var v = 0; v < this.vertices.length; v++) {
-            if(vectorsEqual( this.vertices[v], vertex, epsilon)){
-               return v; 
-            }
-        }
-	    return false;
+	function vertexExists(vertex, epsilon) {
+		for (var v = 0; v < this.vertices.length; v++) {
+			if (vectorsEqual(this.vertices[v], vertex, epsilon)) {
+				return v;
+			}
+		}
+		return false;
 	}
-	
+
 	/**
 	 * Compare two vectors element-wise.
-	 * @parameter epsilon gives the accepted deviation, 
+	 * @parameter epsilon gives the accepted deviation,
 	 * which is 0 if not specified.
 	 */
 
 	function vectorsEqual(vec1, vec2, epsilon) {
-		for(var i = 0, len = vec1.length; i < len; i++) {
-			if(epsilon) {
-				if( Math.abs(vec1[i] - vec2[i]) > epsilon ) {
+		for (var i = 0, len = vec1.length; i < len; i++) {
+			if (epsilon) {
+				if (Math.abs(vec1[i] - vec2[i]) > epsilon) {
 					return false;
 				}
 			} else {
-				if(vec1[i] != vec2[i]) {
+				if (vec1[i] != vec2[i]) {
 					return false;
 				}
 			}
 		}
 		return true;
 	}
-	
+
 	/**
 	 * Use the cross product of the edge vectors.
 	 * The order of the vertices determines the sign of the normal.
 	 */
-	function calcuatePolygonNormalsFromMesh(){		
+	function calcuatePolygonNormalsFromMesh() {
 		// Loop over polygons.
-		for(var p = 0; p < this.polygonVertices.length; p++) {
+		for (var p = 0; p < this.polygonVertices.length; p++) {
 			var polygon = this.polygonVertices[p];
-			this.polygonNormals[p] = [0,0,0];
+			this.polygonNormals[p] = [0, 0, 0];
 			var normal = this.polygonNormals[p]
 			calculateNormalForPolygon(this.vertices, polygon, normal);
 		}
 	}
-	
+
 	/**
 	 * Calculate a separate normal for each vertex, but not for each
-	 * corner of each polygon. 
+	 * corner of each polygon.
 	 * For a vertex normal averages over all polygon normals
 	 * the vertex is part of.
 	 * The weight of the angle at the vertex is used as weight.
 	 * No check if calculation has been already done.
 	 */
-	function calcuateVertexNormalsFromPolygonNormals(){
+	function calcuateVertexNormalsFromPolygonNormals() {
 		// Polygon normals must be calculated first.
-		if(this.polygonNormals.length == 0) {
+		if (this.polygonNormals.length == 0) {
 			calcuatePolygonNormalsFromMesh.apply(this);
 		}
 
 		// Initialize normal array.
-		for(var v = 0; v < this.vertices.length; v++) {
+		for (var v = 0; v < this.vertices.length; v++) {
 			this.vertexNormals[v] = [0,0,0];
 		}
-		
+
 		// BEGIN exercise Vertex-Normals
-		
+
 		// Initialize normal array.
 		// Loop over polygons.
+		for (let p = 0; p < this.polygonVertices.length; p++) {
+			const polygon = this.polygonVertices[p];
 
 			// Loop over vertices of polygon.
-
+			for (let e = 0; e < polygon.length; e++) {
 				// Accumulate/add all polygon normals.
+				if (polygon[e] < this.vertexNormals.length)
+					vec3.add(this.vertexNormals[polygon[e]], this.polygonNormals[p]);
+				else
+					console.log('Error', polygon[e]);
+			}
+		}
+
+		// Normalize normals.
+		for (let n = 0; n < this.vertexNormals.length; n++) {
+			vec3.normalize(this.vertexNormals[n]);
+		}
+		// Loop over vertices of polygon.
+
+		// Accumulate/add all polygon normals.
 
 		// Normalize normals.
 
 		// END exercise Vertex-Normals
 	}
-	
+
 	/**
 	 * Assume that all vertices of the polygon are in one plane.
 	 * Calculate two (non parallel) vectors inside the plane of the polygon.
 	 * Assume that at least two (consecutive) vertices of a polygon
 	 * are not on a straight line with the first vertex.
-	 * 
+	 *
 	 * @ parameter vertices may be the transformed vertices.
 	 * @ parameter polygon as defined in data.
 	 * @ parameter n is the normal vector or calculate.
 	 * @ returns i.e. modifies parameter n as array (vec3) or null-vector if normal does not exist.
 	 * @ returns length of normal, which is 1 or 0, if normal does not exist.
 	 */
-	function calculateNormalForPolygon(vertices, polygon, n){
-		
-		if(n == null){
+	function calculateNormalForPolygon(vertices, polygon, n) {
+
+		if (n == null) {
 			console.log("Error: Parameter normal n is null.");
 		}
-		
+
 		// BEGIN exercise Z-Buffer
 		// BEGIN exercise Vertex-Normals
+		if (polygon.length < 3) {
+			return [0, 0, 0];
+		}
 
+		// Calculate normal vector from vector product of edges.
+		var u = vec3.create(vertices[polygon[0]]);
+		var v = vec3.subtract(vec3.create(vertices[polygon[1]]), u);
+		var w = vec3.subtract(vec3.create(vertices[polygon[2]]), u);
+
+		// cross product
+
+		// if values of vector n = 0, then v1||v2
+
+
+		// normalize n and return
 		// Two edge-vectors dim 3:
 
-				// Check for polygon vertex exist (common index error in data).
+		// Check for polygon vertex exist (common index error in data).
 
-					// We do not use the matrix lib here.
+		// We do not use the matrix lib here.
 
-			// Calculate normal vector from vector product of edges.
+		// Calculate normal vector from vector product of edges.
+		n = vec3.cross(v, w, n);
 
-			// Check that e[u] are not parallel.
+		// Check that e[u] are not parallel.
+		if (n[0] === 0 && n[1] === 0 && n[2] === 0) {
+			return [0, 0, 0];
+		}
+		// Normal exist, otherwise try next edges.
 
-				// Normal exist, otherwise try next edges.
+		// Set null-vector (alternative: positive z-direction) as default.
 
-			// Set null-vector (alternative: positive z-direction) as default. 
+		// Normalize n, ignoring w.
+		return vec3.normalize(n);
 
-			// Normalize n, ignoring w.
-			// We do this by hand as the length is already calculated.
+		// We do this by hand as the length is already calculated.
 
-		
+
 		// Only  for template, comment this out for solution.
-		return 1;
 
 		// END exercise Vertex-Normals
 		// END exercise Z-Buffer
 	}
-	
+
 	/**
 	 * Create triangle fans (123, 134, 145, ...)
 	 * from polygons.
@@ -460,73 +493,73 @@ define(["exports", "data", "glMatrix"], function(data, exports) {
 	 * see toggleTriangulation.
 	 * Adjust: polygonVertices, polygonColors and polygonTextureCoord.
 	 */
-	function triangulate(){
-		// Create new array for the triangles and colors, 
+	function triangulate() {
+		// Create new array for the triangles and colors,
 		// but keep all polygon data.
 		this.triangles = [];
 		this.orgPolygonVertices = this.polygonVertices;
 		this.triangleColors = [];
-		this.orgPolygonColors = this.polygonColors;		
+		this.orgPolygonColors = this.polygonColors;
 		this.orgPolygonTextureCoord = this.polygonTextureCoord;
 		this.trianglePolygonTextureCoord = [];
-		
-		var nbTris = 0;		
+
+		var nbTris = 0;
 		// Loop over polygons.
-		for(var p = 0; p < this.polygonVertices.length; p++) {
+		for (var p = 0; p < this.polygonVertices.length; p++) {
 			var polygon = this.polygonVertices[p];
-			if(polygon.length < 3) {
-				console.error("triangulate: skip polygon: "+p);
+			if (polygon.length < 3) {
+				console.error("triangulate: skip polygon: " + p);
 				continue;
 			}
 			// Loop over vertices of polygon.
 			var firstVertex = polygon[0];
-			for(var v = 1; v < polygon.length-1; v++) {
+			for (var v = 1; v < polygon.length - 1; v++) {
 				// Crate the triangle fan.
-				this.triangles[nbTris] = [firstVertex, polygon[v], polygon[v+1]];
+				this.triangles[nbTris] = [firstVertex, polygon[v], polygon[v + 1]];
 				this.triangleColors.push(this.polygonColors[p]);
 				// Adjust the texture coordinates.
-				if((this.textureURL != "") && (this.polygonTextureCoord.length != 0)){
+				if ((this.textureURL != "") && (this.polygonTextureCoord.length != 0)) {
 					this.trianglePolygonTextureCoord[nbTris] = [];
 					this.trianglePolygonTextureCoord[nbTris].push(this.polygonTextureCoord[p][0]);
 					this.trianglePolygonTextureCoord[nbTris].push(this.polygonTextureCoord[p][v]);
-					this.trianglePolygonTextureCoord[nbTris].push(this.polygonTextureCoord[p][v+1]);
+					this.trianglePolygonTextureCoord[nbTris].push(this.polygonTextureCoord[p][v + 1]);
 				}
 				// Count created triangles.
 				nbTris++;
-			}					
+			}
 		}
-		
+
 		// Set triangles as new polygons.
 		this.polygonVertices = this.triangles;
 		this.polygonColors = this.triangleColors;
-		this.polygonTextureCoord = this.trianglePolygonTextureCoord;		
+		this.polygonTextureCoord = this.trianglePolygonTextureCoord;
 	}
-	
-	function isTriangulated(){
-		if(this.polygonVertices === this.triangles){
+
+	function isTriangulated() {
+		if (this.polygonVertices === this.triangles) {
 			return true;
 		}
 		return false;
-	}	
-	
-	function toggleTriangulation(){
-		if(isTriangulated.apply(this)){
+	}
+
+	function toggleTriangulation() {
+		if (isTriangulated.apply(this)) {
 			// Set original polygons as new polygons.
 			this.polygonVertices = this.orgPolygonVertices;
-			this.polygonColors = this.orgPolygonColors;	
-			this.polygonTextureCoord = this.orgPolygonTextureCoord;		
+			this.polygonColors = this.orgPolygonColors;
+			this.polygonTextureCoord = this.orgPolygonTextureCoord;
 		} else {
 			// Set triangles as new polygons.
 			this.polygonVertices = this.triangles;
 			this.polygonColors = this.triangleColors;
-			this.polygonTextureCoord = this.trianglePolygonTextureCoord;		
+			this.polygonTextureCoord = this.trianglePolygonTextureCoord;
 		}
 		// Re.calculate normals.
 		this.vertexNormals = [];
 		this.polygonNormals = [];
 		calcuateVertexNormalsFromPolygonNormals.apply(this);
 	}
-	
+
 	// Public API.
 	exports.init = init;
 	exports.initModelData = initModelData;
