@@ -17,10 +17,51 @@ define(["exports", "scenegraph", "animation"], //
          */
         function init() {
 
-            var cubeNode1 = scenegraph.createNodeWithModel("dirtyCube", "dirtyCube", {
-               scale: 80,
+            //var cubeNode1 = scenegraph.createNodeWithModel("cube_dirty", "tea", {
+              //  scale: 80,
+            //});
+
+            const sphere1 = scenegraph.createNodeWithModel("Sonne", "sphere", {
+                recursionDepth: 1,
+                scale: 100,
+                color: 2
             });
-            //var teaPot = scenegraph.createNodeWithModel("teaPot", "teapot_dirty");
+            sphere1.rotate([-100,-200,0]);
+
+            const sphere2 = scenegraph.createNodeWithModel("Mond", "sphere", {
+                recursionDepth: 1,
+                scale: 100,
+                color: 2
+            }, sphere1);
+            sphere2.translate([600,0,0]);
+
+            const sphere4 = scenegraph.createNodeWithModel("kleiner Mond", "sphere", {
+                recursionDepth: 1,
+                scale: 20,
+                color: 7
+            }, sphere2);
+            sphere4.translate([400,0,0]);
+
+            const sphere3 = scenegraph.createNodeWithModel("Planet", "sphere", {
+                recursionDepth: 1,
+                scale: 30,
+                color: 7
+            }, sphere1);
+            sphere3.translate([300,0,0]);
+
+            animation.assign(sphere1, "rotate", {rotationSpeed:[0,0.02,0]});
+            animation.assign(sphere2, "rotate", {rotationSpeed:[0,1,0]});
+            animation.assign(sphere3, "rotate", {rotationSpeed:[0,0.07,0]});
+            animation.assign(sphere4, "rotate", {rotationSpeed:[1,0.09,0]});
+
+
+            sphere1.setVisible(true);
+            sphere2.setVisible(true);
+            sphere3.setVisible(true);
+            sphere4.setVisible(true);
+
+
+            // var teaPot = scenegraph.createNodeWithModel("teaPot", "teapot_dirty");
 
 
             // BEGIN exercise myModel
