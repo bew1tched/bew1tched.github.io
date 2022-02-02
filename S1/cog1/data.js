@@ -208,6 +208,33 @@ define(["exports", "data", "glMatrix"], function (data, exports) {
     function cleanData() {
 
         // BEGIN exercise Clean-Data
+        let checked = [];
+        // List of index pairs to merge.
+        // Index of the list is the vertex to modify.
+        for (let v1 = 0; v1 < this.vertices.length; v1++) {
+            // Find equal vertices.
+            if (checked[v1] !== true) {
+                // Take the lowest index as replacement.
+                for (let v2 = v1 + 1; v2 < this.vertices.length; v2++) {
+                    if (vectorsEqual(this.vertices[v2], this.vertices[v1])) {
+                        checked[v2] = true;
+                        console.log("Clean Vertex Data: " + v2 + " -> " + v1);
+                        // Loop over polygons.
+
+                        // Loop vertices of polygon.
+                        for (let p = 0; p < this.polygonVertices.length; p++) {
+                            // Loop vertices of polygon.
+                            for (let v = 0; v < this.polygonVertices[p].length; v++) {
+                                // Check for polygon vertex exist in merge list and replace.
+                                if (v2 === this.polygonVertices[p][v]) {
+                                    this.polygonVertices[p][v] = v1;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
 
         const searchArray = (value, arr) => {
             for (let i = 0; i < arr.length; i++) {
@@ -221,9 +248,7 @@ define(["exports", "data", "glMatrix"], function (data, exports) {
         let added = [];
         let temp = this.polygonVertices.map(x => {
             if (searchArray(x, added)) {
-                if (x != null) {
                 added.push(x);
-            }
                 return x;
             }
         });
@@ -231,19 +256,13 @@ define(["exports", "data", "glMatrix"], function (data, exports) {
         let added2 = [];
         let temp2 = this.vertices.map(x => {
             if (searchArray(x, added2)) {
-                if (x != null) {
-                    added2.push(x);
-                }
+                added2.push(x);
                 return x;
             }
         });
-        console.log(this.polygonVertices[0])
-        console.log(this.vertices[0])
-     console.log(added[0])
-    this.polygonVertices = added;
-        console.log(added2[0])
-        this.vertices = added2;
-        //console.log(added2)
+
+        this.polygonVertices = temp.filter(x => x != null);
+        this.vertices = temp2.filter(x => x != null);
 
 
         // Dump the cleaned data to copy it from the console into a clean model.

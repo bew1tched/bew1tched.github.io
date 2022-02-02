@@ -17,49 +17,29 @@ define(["exports", "scenegraph", "animation"], //
          */
         function init() {
 
-            //var cubeNode1 = scenegraph.createNodeWithModel("cube_dirty", "tea", {
-              //  scale: 80,
-            //});
+        let schulter =scenegraph.createNodeWithModel('Schulter', 'sphere', {recursionDepth:2, scale: 80});
 
-            const sonne = scenegraph.createNodeWithModel("Sonne", "sphere", {
-                recursionDepth: 1,
-                scale: 100,
-                color: 2
-            });
-            sonne.rotate([-100,-200,0]);
+        let oberArm = scenegraph.createNodeWithModel("Oberarm", 'cube', {scale: 50}, schulter);
+            oberArm.scale([3,0.05,0.05]);
+            oberArm.translate([96,-248,0]);
+            oberArm.rotate([0,0,-1.2])
 
-            const mond = scenegraph.createNodeWithModel("Mond", "sphere", {
-                recursionDepth: 1,
-                scale: 80,
-                color: 2
-            }, sonne);
-            mond.translate([600,0,0]);
+        let ellenbogen = scenegraph.createNodeWithModel("Ellenbogen", "sphere", {recursionDepth: 2, scale:60}, schulter);
+        ellenbogen.translate([180,-464,0]);
 
+        let unterArm = scenegraph.createNodeWithModel("Unterarm", "cube", {scale:35}, ellenbogen);
+        unterArm.scale([5,0,0]);
+        unterArm.translate([246,-4,0]);
 
+        let handGelenk = scenegraph.createNodeWithModel("Handgelenk", "sphere", {recursionDepth:2, scale: 40}, ellenbogen);
+        handGelenk.translate([474,-4,0]);
+        handGelenk.rotate([0.8,0.3,0])
 
-            const planet = scenegraph.createNodeWithModel("Planet", "sphere", {
-                recursionDepth: 1,
-                scale: 30,
-                color: 7
-            }, sonne);
-            planet.translate([300,0,0]);
+        let hand = scenegraph.createNodeWithModel("Hand", "cube", {scale:40}, handGelenk);
+        hand.scale([0.7,1.4,-0.7]);
+        hand.translate([110,0,0]);
+        hand.rotate([0,0,-1.57]);
 
-            const kmond = scenegraph.createNodeWithModel("kleiner Mond", "sphere", {
-                recursionDepth: 1,
-                scale: 20,
-                color: 7
-            }, planet);
-            kmond.translate([400,0,0]);
-
-            sonne.setVisible(true);
-            mond.setVisible(true);
-            kmond.setVisible(true);
-            planet.setVisible(true);
-
-            animation.assign(sonne, "rotate", {rotationSpeed:[0,0.02,0]});
-            animation.assign(planet, "rotate", {rotationSpeed:[0,0.03,0]});
-            animation.assign(mond, "rotate", {rotationSpeed:[0,0.07,0]});
-            // var teaPot = scenegraph.createNodeWithModel("teaPot", "teapot_dirty");
 
 
             // BEGIN exercise myModel

@@ -17,7 +17,7 @@ define(["exports", "scenegraph", "animation"], //
          */
         function init() {
 
-            var cubeNode1 = scenegraph.createNodeWithModel("dirtyCube", "dirtyCube", {
+            var cubeNode1 = scenegraph.createNodeWithModel("dirtyCube", "teapot_dirty", {
                scale: 80,
             });
             //var teaPot = scenegraph.createNodeWithModel("teaPot", "teapot_dirty");
